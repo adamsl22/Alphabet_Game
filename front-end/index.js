@@ -57,8 +57,6 @@ function addUser(){
             },
             body: JSON.stringify(data)
         })
-        .then(resp => resp.json())
-        .then(json => console.log(json))
     })
 }
 
