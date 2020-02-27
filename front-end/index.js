@@ -58,11 +58,10 @@ function addUser(){
             },
             body: JSON.stringify(data)
         })
+        .then(resp => resp.json())
+        .then(user => currentUser(user))
+        .then(introSlot.innerHTML = '')
     })
-    .then(resp => resp.json())
-    .then(user => currentUser(user))
-    .then(introSlot.innerHTML = '')
-})
 }
 
 function returningUser(){
