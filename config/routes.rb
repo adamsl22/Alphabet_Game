@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get "/letters", to: "games#letters"
   
-  get "/users",to: "games#users"
-  post "/users",to: "games#users"
+  get "/users", to: "games#users"
+  post "/users", to: "games#newUser"
 
 end

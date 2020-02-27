@@ -4,7 +4,17 @@ class GamesController < ApplicationController
         render json: Letter.all
     end
 
-    def user
+    def users
         render json: User.all
+    end
+
+    def newUser
+        render json: User.create(user_params)
+    end
+
+    private
+
+    def user_params
+        params.permit(:name)
     end
 end

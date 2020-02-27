@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const playerForm = `
     <form id='form'>
-    <input type="text" name="name" placeholder="Your name" value="" />
-    <input type="submit" value="Submit" />
+        <input type="text" name="name" placeholder="Your name" value="" />
+        <input type="submit" value="Submit" />
     </form>
 `    
 
@@ -41,16 +41,24 @@ function buttons(){
 }
 
 function addUser(){
-    playerForm.addEventListener('submit', (e) => {
+    let userForm = document.getElementById("form")
+    userForm.addEventListener('submit', (e) => {
         e.preventDefault()
+
+        let data = {
+            "name": userForm.name.value
+        }
+        
         fetch(USERS_URL, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
                 accept: 'application/json'
             },
-            body: JSON.stringify({'name': playerForm.name.value})
+            body: JSON.stringify(data)
         })
+        .then(resp => resp.json())
+        .then(json => console.log(json))
     })
 }
 
