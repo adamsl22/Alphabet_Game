@@ -6,8 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-
 Letter.create(character: "A")
 Letter.create(character: "B")
 Letter.create(character: "C")
@@ -21,6 +19,7 @@ Letter.create(character: "J")
 Letter.create(character: "K")
 Letter.create(character: "L")
 Letter.create(character: "M")
+Letter.create(character: "N")
 Letter.create(character: "O")
 Letter.create(character: "P")
 Letter.create(character: "Q")

@@ -1,3 +1,14 @@
+body {
+    background-color: #7620c7;
+}
+
 header {
-    color: #d67922
+    text-align: center;
+    color: #d67922;
+}
+
+#intro-slot {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 }
