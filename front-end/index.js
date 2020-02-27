@@ -1,5 +1,6 @@
 const LETTERS_URL = 'http://localhost:3000/letters'
 const USERS_URL = 'http://localhost:3000/users'
+const GAMES_URL = 'http://localhost:3000/games'
 
 let introSlot = document.getElementById('intro-slot')
 
@@ -71,4 +72,18 @@ form.addEventListener('submit', (e) => {
     .then(users => currentUser(users.filter(user => user.name === form.name.value)[0]))
     .then(introSlot.innerHTML = '')
 })
+}
+
+function currentUser(user){
+    fetch(GAMES_URL,{
+        method: "Post",
+        headers: {
+            "content-type": "application/json",
+            accept: "application/json"
+        },
+        body: JSON.stringify({'user_id': user.id})
+    })
+    .then(resp => resp.json())
+    .then(game => currentGame(game))
+    .then(postBestTimes(user))
 }
