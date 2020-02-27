@@ -41,27 +41,28 @@ function buttons(){
 }
 
 function addUser(){
-    let userForm = document.getElementById("form")
-    userForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-
-        let data = {
-            "name": userForm.name.value
-        }
-        
-        fetch(USERS_URL, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                accept: 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(resp => resp.json())
-        .then(json => console.log(json))
+form.addEventListener('submit', (e) => {
+    const form = document.getElementById('form')
+    e.preventDefault()
+    fetch(USERS_URL, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            accept: 'application/json'
+        },
+        body: JSON.stringify({'name': form.name.value})
     })
+    .then(resp => resp.json())
+    .then(user => currentUser(user))
+    .then(introSlot.innerHTML = '')
+})
 }
 
 function returningUser(){
-    form.add
+form.addEventListener('submit', (e) => {
+    fetch(USERS_URL)
+    .then(resp => resp.json())
+    .then(users => currentUser(users.filter(user => user.name === form.name.value)[0]))
+    .then(introSlot.innerHTML = '')
+})
 }
