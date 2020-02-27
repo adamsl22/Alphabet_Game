@@ -1,23 +1,59 @@
-const lettersURL = "http://localhost:3000/letters"
+const LETTERS_URL = 'http://localhost:3000/letters'
+const USERS_URL = 'http://localhost:3000/users'
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchLetters()
-})
+let introSlot = document.getElementById('intro-slot')
 
-function fetchLetters(){
-    fetch(lettersURL)
-    .then(resp => resp.json())
-    .then(json => introPage(json))
+function introPage(){
+    introSlot.innerHTML = `
+        <h1>Welcome</h1>
+        <button>Returning Player</button>
+        <h2>or</h2>
+        <button>New Player</button>
+    `
 }
 
-function introPage(json){
-    let introBox = document.getElementById("intro-slot")
-    
+document.addEventListener('DOMContentLoaded', () => {
+    introPage()
+    buttons()
+})
 
-    json.forEach(function(letter){
-        let intro = document.createElement("h3")
-        intro.innerHTML = `${letter.character}`
+const playerForm = `
+    <form id='form'>
+    <input type="text" name="name" placeholder="Your name" value="" />
+    <input type="submit" value="Submit" />
+    </form>
+`    
 
-        introBox.append(intro)
-    }) 
+function buttons(){
+    document.addEventListener('click', (e) => {
+        switch  (e.target.innerText){
+            case 'Returning Player':
+                introSlot.innerHTML = playerForm
+                returningUser()
+                break
+            case 'New Player':
+                introSlot.innerHTML = playerForm
+                addUser()
+                break
+
+        }
+    })
+}
+
+function addUser(){
+    playerForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        fetch(USERS_URL, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json'
+            },
+            body: JSON.stringify({'name': playerForm.name.value})
+        })
+    })
+}
+
+function returningUser(){
+    form.add
 }
