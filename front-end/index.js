@@ -58,8 +58,17 @@ function addUser(){
             body: JSON.stringify(data)
         })
     })
+    .then(resp => resp.json())
+    .then(user => currentUser(user))
+    .then(introSlot.innerHTML = '')
+})
 }
 
 function returningUser(){
-    form.add
+form.addEventListener('submit', (e) => {
+    fetch(USERS_URL)
+    .then(resp => resp.json())
+    .then(users => currentUser(users.filter(user => user.name === form.name.value)[0]))
+    .then(introSlot.innerHTML = '')
+})
 }
