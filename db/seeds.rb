@@ -35,4 +35,5 @@ Letter.create(character: "X")
 Letter.create(character: "Y")
 Letter.create(character: "Z")
 
-
+User.create(name: 'Test')
+Game.create(seconds: 999, result: true, user_id: 1)

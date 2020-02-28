@@ -31,13 +31,13 @@ function buttons(){
 
 const instructions = `<h3>Instructions:<h3>`
 
-let userForm = document.getElementById("form")
 const playerForm = `
     <form id='form'>
         <input type="text" name="name" placeholder="Your name" value="" />
         <input type="submit" value="Submit" />
     </form>
 `    
+let userForm = document.getElementById("form")
 
 function introPage(){
     introSlot.innerHTML = `
@@ -70,7 +70,7 @@ function addUser(){
 }
 
 function returningUser(){
-    userform.addEventListener('submit', (e) => {
+    userForm.addEventListener('submit', (e) => {
         e.preventDefault()
         fetch(USERS_URL)
         .then(resp => resp.json())
@@ -98,10 +98,17 @@ function postBestTimes(user){
     .then(resp => resp.json())
     .then(games => universalBestTime(games))
     const universalBestTime = function(games){
-        return Math.min(...games.seconds)
+        const successfulGames = games.filter(game => game.result === true)
+        return Math.min(...successfulGames.seconds)
     }
     let bestTimesSlot = document.getElementById('best-times')
-    const personalBestTime = Math.min(...user.games.seconds)
+    let personalBestTime
+        const userWins = user.games.filter(game => game.result === true)
+        if(userWins.length === 0){
+            personalBestTime = '--'
+        } else {
+            personalBestTime = Math.min(...userWins.seconds)
+        }
     bestTimesSlot.innerHTML = `
     <span>'Universal Best Time: '<span id='top-time'>'${universalBestTime} seconds'</span><br>
     'Personal Best Time: '<span id='top-time'>'${personalBestTime} seconds'</span></span>
