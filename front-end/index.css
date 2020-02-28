@@ -16,8 +16,10 @@ button {
 }
 
 #best-times {
-    text-align: right;
-    color: #c8670c;
+    position: absolute;
+    top: 21%;
+    left: 70%;
+    color: #dbdbdb;
     font-size: 20px;
 }
 
@@ -52,9 +54,11 @@ button {
 
 #letters-area {
     position: absolute;
-    top: 30%;
+    text-align: center;
+    width: 250px;
+    top: 35%;
     left: 70%;
-    font-size: 20px;
+    font-size: 40px;
 }
 
 #left-basket {
@@ -93,7 +97,7 @@ button {
 
 #s1 {
     position: absolute;
-    top: 76%;
+    top: 77%;
     left: 30%;
     height: 25px;
     width: 25px;
@@ -101,7 +105,7 @@ button {
 
 #s2 {
     position: absolute;
-    top: 76%;
+    top: 77%;
     left: 33.75%;
     height: 25px;
     width: 25px;
@@ -109,7 +113,7 @@ button {
 
 #s3 {
     position: absolute;
-    top: 76%;
+    top: 77%;
     left: 37.5%;
     height: 25px;
     width: 25px;
@@ -117,7 +121,7 @@ button {
 
 #s4 {
     position: absolute;
-    top: 76%;
+    top: 77%;
     left: 41.25%;
     height: 25px;
     width: 25px;
@@ -125,7 +129,7 @@ button {
 
 #s5 {
     position: absolute;
-    top: 76%;
+    top: 77%;
     left: 45%;
     height: 25px;
     width: 25px;

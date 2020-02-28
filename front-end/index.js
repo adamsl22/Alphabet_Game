@@ -33,11 +33,10 @@ const instructions = `<h3>Instructions:<h3>`
 
 const playerForm = `
     <form id='form'>
-        <input type="text" name="name" placeholder="Your name" value="" />
+        <input type="text" name="name" placeholder="Username" value="" />
         <input type="submit" value="Submit" />
     </form>
 `    
-let userForm = document.getElementById("form")
 
 function introPage(){
     introSlot.innerHTML = `
@@ -49,6 +48,7 @@ function introPage(){
 }
 
 function addUser(){
+    let userForm = document.getElementById("form")
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
 
@@ -65,17 +65,30 @@ function addUser(){
             body: JSON.stringify(data)
         })
         .then(resp => resp.json())
-        .then(user => currentUser(user))
+        .then(user => {
+            if(user.id){
+                currentUser(user)
+            } else {
+                alert('This username is already in use.')
+            }
+        })
     })
 }
 
 function returningUser(){
+    let userForm = document.getElementById("form")
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
         fetch(USERS_URL)
         .then(resp => resp.json())
         .then(users => currentUser(users.filter(user => user.name === userForm.name.value)[0]))
     })
+}
+
+function introToGame(){
+    let transition = document.getElementById("transition-page")
+    introSlot.innerHTML = ''
+    transition.remove()
 }
 
 function currentUser(user){
@@ -94,28 +107,26 @@ function currentUser(user){
 }
 
 function postBestTimes(user){
+    let bestTimesSlot = document.getElementById('best-times')
     fetch(GAMES_URL)
     .then(resp => resp.json())
-    .then(games => universalBestTime(games))
-    const universalBestTime = function(games){
+    .then(games => {
         const successfulGames = games.filter(game => game.result === true)
-        return Math.min(...successfulGames.seconds)
-    }
-    let bestTimesSlot = document.getElementById('best-times')
-    let personalBestTime
-    let userWins = []
-        if(user.games.length > 0){
-            userWins = user.games.filter(game => game.result === true)
-        }
-        if(userWins.length > 0){
-            personalBestTime = Math.min(...userWins.seconds)
+        const successfulGamesSeconds = successfulGames.map(game => game.seconds)
+        const universalBestTime = Math.min(...successfulGamesSeconds)
+        const userWins = successfulGames.filter(game => game.user_id === user.id)
+        let personalBestTime
+        if (userWins.length > 0){
+            const userWinsSeconds = userWins.map(game => game.seconds)
+            personalBestTime = Math.min(...userWinsSeconds)
         } else {
             personalBestTime = '--'
         }
-    bestTimesSlot.innerHTML = `
-    <span>'Universal Best Time: '<span id='top-time'>'${universalBestTime} seconds'</span><br>
-    'Personal Best Time: '<span id='top-time'>'${personalBestTime} seconds'</span></span>
-    `
+        bestTimesSlot.innerHTML = `
+        <span>Universal Best Time: <span id='top-time'>${universalBestTime} seconds</span><br>
+        Personal Best Time: <span id='top-time'>${personalBestTime} seconds</span></span>
+    `        
+    })
 }
 
 let spaceKeyDetector = document.getElementById('pause')
@@ -129,11 +140,4 @@ function currentGame(game){
         letterSlot.innerText = ` ${letter.character}`
         lettersArea.append(letterSlot)
     }))
-    .then(postBestTimes(user))
-}
-
-function introToGame(){
-    let transition = document.getElementById("transition-page")
-    introSlot.innerHTML = ''
-    transition.remove()
 }
