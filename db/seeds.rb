@@ -35,4 +35,11 @@ Letter.create(character: "X")
 Letter.create(character: "Y")
 Letter.create(character: "Z")
 
+Game.destroy_all
+User.destroy_all
+
+u1 = User.create(name: "Martin")
+Game.create({seconds: 10, result: true, user_id: u1.id})
+
+
 

@@ -31,7 +31,7 @@ function buttons(){
 
 const instructions = `<h3>Instructions:<h3>`
 
-let userForm = document.getElementById("form")
+
 const playerForm = `
     <form id='form'>
         <input type="text" name="name" placeholder="Your name" value="" />
@@ -49,6 +49,7 @@ function introPage(){
 }
 
 function addUser(){
+    let userForm = document.getElementById("form")
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
 
@@ -70,7 +71,8 @@ function addUser(){
 }
 
 function returningUser(){
-    userform.addEventListener('submit', (e) => {
+    let userForm = document.getElementById("form")
+    userForm.addEventListener('submit', (e) => {
         e.preventDefault()
         fetch(USERS_URL)
         .then(resp => resp.json())
