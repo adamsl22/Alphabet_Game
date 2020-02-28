@@ -6,7 +6,7 @@ let introSlot = document.getElementById('intro-slot')
 
 function introPage(){
     introSlot.innerHTML = `
-        <h1>Welcome</h1>
+        <h1>Welcome!</h1>
         <button>Returning Player</button>
         <h2>or</h2>
         <button>New Player</button>
@@ -36,13 +36,19 @@ function buttons(){
                 introSlot.innerHTML = playerForm
                 addUser()
                 break
+            case 'Continue':
+                introSlot.innerHTML = ''
+                break
 
         }
     })
 }
 
+const instructionsTab = `<h3>Instructions:<h3>
+<button>Continue</button>`
+
+let userForm = document.getElementById("form")
 function addUser(){
-    let userForm = document.getElementById("form")
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
 
@@ -60,20 +66,22 @@ function addUser(){
         })
         .then(resp => resp.json())
         .then(user => currentUser(user))
-        .then(introSlot.innerHTML = '')
+        .then(introSlot.innerHTML = instructionsTab)
     })
 }
 
 function returningUser(){
-form.addEventListener('submit', (e) => {
-    fetch(USERS_URL)
-    .then(resp => resp.json())
-    .then(users => currentUser(users.filter(user => user.name === form.name.value)[0]))
-    .then(introSlot.innerHTML = '')
-})
+    userform.addEventListener('submit', (e) => {
+        e.preventDefault()
+        fetch(USERS_URL)
+        .then(resp => resp.json())
+        .then(users => currentUser(users.filter(user => user.name === userForm.name.value)[0]))
+        .then(introSlot.innerHTML = '')
+    })
 }
 
 function currentUser(user){
+    postBestTimes(user)
     fetch(GAMES_URL,{
         method: "Post",
         headers: {
@@ -84,5 +92,32 @@ function currentUser(user){
     })
     .then(resp => resp.json())
     .then(game => currentGame(game))
-    .then(postBestTimes(user))
+}
+
+function postBestTimes(user){
+    fetch(GAMES_URL)
+    .then(resp => resp.json())
+    .then(games => universalBestTime(games))
+    const universalBestTime = function(games){
+        return Math.min(...games.seconds)
+    }
+    let bestTimesSlot = document.getElementById('best-times')
+    const personalBestTime = Math.min(...user.games.seconds)
+    bestTimesSlot.innerHTML = `
+    <span>'Universal Best Time: '<span id='top-time'>'${universalBestTime} seconds'</span><br>
+    'Personal Best Time: '<span id='top-time'>'${personalBestTime} seconds'</span></span>
+    `
+}
+
+let spaceKeyDetector = document.getElementById('pause')
+let lettersArea = document.getElementById('letters-area')
+function currentGame(game){
+    spaceKeyDetector.innerText = 'Press SPACE to Start Game'
+    fetch(LETTERS_URL)
+    .then(resp => resp.json())
+    .then(letters => letters.forEach(letter => {
+        let letterSlot = document.createElement('span')
+        letterSlot.innerText = ` ${letter.character}`
+        lettersArea.append(letterSlot)
+    }))
 }

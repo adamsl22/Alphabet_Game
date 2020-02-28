@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   get "/users", to: "games#users"
   post "/users", to: "games#newUser"
 
+  get "/games", to: "games#games"
+  post "/games", to: "games#newGame"
+
 end
