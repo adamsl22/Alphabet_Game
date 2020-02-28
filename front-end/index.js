@@ -4,26 +4,11 @@ const GAMES_URL = 'http://localhost:3000/games'
 
 let introSlot = document.getElementById('intro-slot')
 
-function introPage(){
-    introSlot.innerHTML = `
-        <h1>Welcome!</h1>
-        <button>Returning Player</button>
-        <h2>or</h2>
-        <button>New Player</button>
-    `
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     introPage()
     buttons()
 })
-
-const playerForm = `
-    <form id='form'>
-        <input type="text" name="name" placeholder="Your name" value="" />
-        <input type="submit" value="Submit" />
-    </form>
-`    
 
 function buttons(){
     document.addEventListener('click', (e) => {
@@ -33,7 +18,7 @@ function buttons(){
                 returningUser()
                 break
             case 'New Player':
-                introSlot.innerHTML = playerForm
+                introSlot.innerHTML = `${instructions}<br>${playerForm}`
                 addUser()
                 break
             case 'Continue':
@@ -44,10 +29,25 @@ function buttons(){
     })
 }
 
-const instructionsTab = `<h3>Instructions:<h3>
-<button>Continue</button>`
+const instructions = `<h3>Instructions:<h3>`
 
 let userForm = document.getElementById("form")
+const playerForm = `
+    <form id='form'>
+        <input type="text" name="name" placeholder="Your name" value="" />
+        <input type="submit" value="Submit" />
+    </form>
+`    
+
+function introPage(){
+    introSlot.innerHTML = `
+        <h1>Welcome</h1>
+        <button>Returning Player</button>
+        <h2>or</h2>
+        <button>New Player</button>
+    `
+}
+
 function addUser(){
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
@@ -66,7 +66,6 @@ function addUser(){
         })
         .then(resp => resp.json())
         .then(user => currentUser(user))
-        .then(introSlot.innerHTML = instructionsTab)
     })
 }
 
@@ -76,11 +75,11 @@ function returningUser(){
         fetch(USERS_URL)
         .then(resp => resp.json())
         .then(users => currentUser(users.filter(user => user.name === userForm.name.value)[0]))
-        .then(introSlot.innerHTML = '')
     })
 }
 
 function currentUser(user){
+    introToGame()
     postBestTimes(user)
     fetch(GAMES_URL,{
         method: "Post",
@@ -120,4 +119,11 @@ function currentGame(game){
         letterSlot.innerText = ` ${letter.character}`
         lettersArea.append(letterSlot)
     }))
+    .then(postBestTimes(user))
+}
+
+function introToGame(){
+    let transition = document.getElementById("transition-page")
+    introSlot.innerHTML = ''
+    transition.remove()
 }

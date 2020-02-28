@@ -26,15 +26,24 @@ button {
     background-color: black;
     height: 350px;
     width: 350px;
-    top: 20%;
+    top: 21%;
     left: 25%;
+}
+
+#transition-page {
+    position: absolute;
+    z-index: 1;
+    background-color: #7620c7;
+    padding: 70px 0;
+    height: 500px;
+    width: 100%;
 }
 
 #intro-slot {
     color: #90a2b4;
     font-size: 20px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     text-align: center;
     padding: 70px 0;
     justify-content: center;
