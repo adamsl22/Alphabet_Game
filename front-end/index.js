@@ -21,9 +21,6 @@ function buttons(){
                 introSlot.innerHTML = `${instructions}<br>${playerForm}`
                 addUser()
                 break
-            case 'Continue':
-                introSlot.innerHTML = ''
-                break
 
         }
     })
@@ -131,6 +128,17 @@ function postBestTimes(user){
 
 let spaceKeyDetector = document.getElementById('pause')
 let lettersArea = document.getElementById('letters-area')
+let enabled = false
+let timer = document.getElementById('clock')
+
+let seconds = 0
+function incrementSeconds(){
+    while (enabled === true){
+        seconds += 1
+        timer.innerText = seconds.toString()
+    }
+}
+
 function currentGame(game){
     spaceKeyDetector.innerText = 'Press SPACE to Start Game'
     fetch(LETTERS_URL)
@@ -140,4 +148,23 @@ function currentGame(game){
         letterSlot.innerText = ` ${letter.character}`
         lettersArea.append(letterSlot)
     }))
+
+    document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 32){
+            switch (spaceKeyDetector.innerText){
+                case 'Press SPACE to Start Game':
+                    spaceKeyDetector.innerText = 'Press Space to Pause Game'
+                    enabled = true
+                    setInterval(incrementSeconds(), 1000)
+                    break
+                case 'Press Space to Pause Game':
+                    enabled = false
+                    spaceKeyDetector.innerText = 'Press Space to Resume Game'
+                    break
+                case 'Press Space to Resume Game':
+                    enabled = true
+                    spaceKeyDetector.innerText = 'Press Space to Pause Game'
+            }
+        }
+    })
 }
