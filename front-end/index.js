@@ -31,7 +31,6 @@ function buttons(){
 
 const instructions = `<h3>Instructions:<h3>`
 
-
 const playerForm = `
     <form id='form'>
         <input type="text" name="name" placeholder="Your name" value="" />
@@ -100,10 +99,19 @@ function postBestTimes(user){
     .then(resp => resp.json())
     .then(games => universalBestTime(games))
     const universalBestTime = function(games){
-        return Math.min(...games.seconds)
+        const successfulGames = games.filter(game => game.result === true)
+        return Math.min(...successfulGames.seconds)
     }
     let bestTimesSlot = document.getElementById('best-times')
-    const personalBestTime = Math.min(...user.games.seconds)
+
+    let personalBestTime
+
+    const userWins = user.games.filter(game => game.result === true)
+    if(userWins.length === 0){
+        personalBestTime = '--'
+    } else {
+        personalBestTime = Math.min(...userWins.seconds)
+    }
     bestTimesSlot.innerHTML = `
     <span>'Universal Best Time: '<span id='top-time'>'${universalBestTime} seconds'</span><br>
     'Personal Best Time: '<span id='top-time'>'${personalBestTime} seconds'</span></span>
