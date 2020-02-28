@@ -4,26 +4,11 @@ const GAMES_URL = 'http://localhost:3000/games'
 
 let introSlot = document.getElementById('intro-slot')
 
-function introPage(){
-    introSlot.innerHTML = `
-        <h1>Welcome</h1>
-        <button>Returning Player</button>
-        <h2>or</h2>
-        <button>New Player</button>
-    `
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     introPage()
     buttons()
 })
-
-const playerForm = `
-    <form id='form'>
-        <input type="text" name="name" placeholder="Your name" value="" />
-        <input type="submit" value="Submit" />
-    </form>
-`    
 
 function buttons(){
     document.addEventListener('click', (e) => {
@@ -39,6 +24,22 @@ function buttons(){
 
         }
     })
+}
+
+const playerForm = `
+    <form id='form'>
+        <input type="text" name="name" placeholder="Your name" value="" />
+        <input type="submit" value="Submit" />
+    </form>
+`    
+
+function introPage(){
+    introSlot.innerHTML = `
+        <h1>Welcome</h1>
+        <button>Returning Player</button>
+        <h2>or</h2>
+        <button>New Player</button>
+    `
 }
 
 function addUser(){
