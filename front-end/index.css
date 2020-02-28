@@ -4,11 +4,120 @@ body {
 
 header {
     text-align: center;
-    color: #d67922;
+}
+
+button {
+    border: 2px solid #34495e;
+    background-color: #6844df;
+    color: whitesmoke;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: "montserrat";
+}
+
+#best-times {
+    text-align: right;
+    color: #c8670c;
+    font-size: 20px;
+}
+
+#canvas {
+    position: absolute;
+    background-color: black;
+    height: 350px;
+    width: 350px;
+    top: 20%;
+    left: 25%;
 }
 
 #intro-slot {
+    color: #90a2b4;
+    font-size: 20px;
+    position: relative;
+    z-index: 1;
     text-align: center;
+    padding: 70px 0;
     justify-content: center;
     align-content: center;
+}
+
+#letters-area {
+    position: absolute;
+    top: 30%;
+    left: 70%;
+    font-size: 20px;
+}
+
+#left-basket {
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    top: 40%;
+    left: 11%;
+    text-align: center;
+}
+
+#right-basket {
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    top: 40%;
+    left: 54.5%;
+    text-align: center;
+    color: #90a2b4;
+    font-size: 100px;
+}
+
+#pause {
+    position: absolute;
+    top: 75%;
+    left: 70%;
+}
+
+#clock {
+    position: absolute;
+    top: 84%;
+    left: 36.5%;
+    font-size: 50px;
+    color: whitesmoke
+}
+
+#s1 {
+    position: absolute;
+    top: 76%;
+    left: 30%;
+    height: 25px;
+    width: 25px;
+}
+
+#s2 {
+    position: absolute;
+    top: 76%;
+    left: 33.75%;
+    height: 25px;
+    width: 25px;
+}
+
+#s3 {
+    position: absolute;
+    top: 76%;
+    left: 37.5%;
+    height: 25px;
+    width: 25px;
+}
+
+#s4 {
+    position: absolute;
+    top: 76%;
+    left: 41.25%;
+    height: 25px;
+    width: 25px;
+}
+
+#s5 {
+    position: absolute;
+    top: 76%;
+    left: 45%;
+    height: 25px;
+    width: 25px;
 }
