@@ -14,14 +14,13 @@ function buttons(){
     document.addEventListener('click', (e) => {
         switch  (e.target.innerText){
             case 'Returning Player':
-                introSlot.innerHTML = playerForm
+                introSlot.innerHTML = `${instructions}<br>${playerForm}`
                 returningUser()
                 break
             case 'New Player':
                 introSlot.innerHTML = `${instructions}<br>${playerForm}`
                 addUser()
                 break
-
         }
     })
 }
@@ -133,10 +132,7 @@ let timer = document.getElementById('clock')
 
 let seconds = 0
 function incrementSeconds(){
-    while (enabled === true){
-        seconds += 1
-        timer.innerText = seconds.toString()
-    }
+    timer.innerText++
 }
 
 function currentGame(game){
@@ -155,7 +151,6 @@ function currentGame(game){
                 case 'Press SPACE to Start Game':
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
                     enabled = true
-                    setInterval(incrementSeconds(), 1000)
                     break
                 case 'Press Space to Pause Game':
                     enabled = false
@@ -165,6 +160,33 @@ function currentGame(game){
                     enabled = true
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
             }
+            if (enabled === true){
+                setInterval(incrementSeconds, 1000)
+            }
         }
     })
 }
+
+
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    var x = canvas.width/2;
+    var y = canvas.height-30;
+    var dx = 2;
+    var dy = -2;
+
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, Math.PI*2);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    x += dx;
+    y += dy;
+}
+
