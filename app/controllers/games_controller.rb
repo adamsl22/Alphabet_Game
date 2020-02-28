@@ -17,9 +17,17 @@ class GamesController < ApplicationController
     end
 
     def newGame
+        Lg.delete_all
         render json: Game.create(game_params)
     end
 
+    def lgs
+        render json: Lg.all
+    end
+
+    def newLg
+        render json: Lg.create(lg_params)
+    end
 
     private
 
@@ -28,5 +36,8 @@ class GamesController < ApplicationController
     end
     def game_params
         params.permit(:user_id)
+    end
+    def lg_params
+        params.permit(:game_id, :letter_id)
     end
 end
