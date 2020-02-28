@@ -103,11 +103,14 @@ function postBestTimes(user){
     }
     let bestTimesSlot = document.getElementById('best-times')
     let personalBestTime
-        const userWins = user.games.filter(game => game.result === true)
-        if(userWins.length === 0){
-            personalBestTime = '--'
-        } else {
+    let userWins = []
+        if(user.games.length > 0){
+            userWins = user.games.filter(game => game.result === true)
+        }
+        if(userWins.length > 0){
             personalBestTime = Math.min(...userWins.seconds)
+        } else {
+            personalBestTime = '--'
         }
     bestTimesSlot.innerHTML = `
     <span>'Universal Best Time: '<span id='top-time'>'${universalBestTime} seconds'</span><br>
