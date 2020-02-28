@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   get "/games", to: "games#games"
   post "/games", to: "games#newGame"
 
+  get "/lgs", to: "games#lgs"
+  post "/lgs", to: "games#newLg"
+
 end

@@ -15,6 +15,11 @@ button {
     font-family: "montserrat";
 }
 
+.letterbomb {
+    color: whitesmoke;
+    font-size: 25px;
+}
+
 #best-times {
     position: absolute;
     top: 21%;

@@ -1,6 +1,7 @@
 const LETTERS_URL = 'http://localhost:3000/letters'
 const USERS_URL = 'http://localhost:3000/users'
 const GAMES_URL = 'http://localhost:3000/games'
+const LG_URL = 'http://localhost:3000/lgs'
 
 let introSlot = document.getElementById('intro-slot')
 
@@ -129,11 +130,11 @@ function postBestTimes(user){
 let spaceKeyDetector = document.getElementById('pause')
 let lettersArea = document.getElementById('letters-area')
 let enabled = false
-let timer = document.getElementById('clock')
 
+let timer = document.getElementById('clock')
 let seconds = 0
 function incrementSeconds(){
-    while (enabled === true){
+    if (enabled === true){
         seconds += 1
         timer.innerText = seconds.toString()
     }
@@ -149,13 +150,12 @@ function currentGame(game){
         lettersArea.append(letterSlot)
     }))
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keypress', (e) => {
         if (e.keyCode === 32){
             switch (spaceKeyDetector.innerText){
                 case 'Press SPACE to Start Game':
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
                     enabled = true
-                    setInterval(incrementSeconds(), 1000)
                     break
                 case 'Press Space to Pause Game':
                     enabled = false
@@ -164,7 +164,45 @@ function currentGame(game){
                 case 'Press Space to Resume Game':
                     enabled = true
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
+                    break
             }
         }
     })
+    setInterval(incrementSeconds, 1000)
+    setInterval(fetchLetters, 500)
+
+    function fetchLetters(){
+        if (enabled === true){
+            const probArray = [1,2,3,4,5,6,7,8,9,10]
+            const prob = probArray[Math.floor(Math.random()*probArray.length)]
+            fetch(LETTERS_URL)
+            .then(resp => resp.json())
+            .then(letters => sampleLetters(letters, prob))
+        }
+    }
+
+    function sampleLetters(letters, prob){
+        let letterArray = letters.map(letter => letter.character)
+        let letterSample
+        if (prob === 10){
+            fetch(LG_URL)
+            .then(resp.json())
+            .then(lgs => {
+                lgCharacters = lgs.map(lg => lg.letter.character)
+                uncaughtLetters = letterArray.filter(letter => !lgCharacters.include(letter))
+                letterSample = uncaughtLetters[Math.floor(Math.random()*uncaughtLetters.length)]
+            })
+        } else {
+            letterSample = letterArray[Math.floor(Math.random()*letterArray.length)]
+        }
+        letterbomb(letterSample)
+    }
+
+    const canvas = document.getElementById('canvas')
+    function letterbomb(letter){
+        let letterBomb = document.createElement('span')
+        letterBomb.className = letterbomb
+        letterBomb.innerText = letter
+        canvas.append(letterBomb)
+    }
 }
