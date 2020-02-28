@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2020_02_27_182934) do
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.integer "seconds"
-    t.boolean "result"
+    t.integer "seconds", default: 0
+    t.boolean "result", default: false
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

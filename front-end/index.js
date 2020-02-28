@@ -61,7 +61,7 @@ function addUser(){
         })
         .then(resp => resp.json())
         .then(user => currentUser(user))
-        .then(introSlot.innerHTML = '')
+        .then(introToGame())
     })
 }
 
@@ -70,7 +70,7 @@ form.addEventListener('submit', (e) => {
     fetch(USERS_URL)
     .then(resp => resp.json())
     .then(users => currentUser(users.filter(user => user.name === form.name.value)[0]))
-    .then(introSlot.innerHTML = '')
+    .then(introToGame())
 })
 }
 
@@ -86,4 +86,10 @@ function currentUser(user){
     .then(resp => resp.json())
     .then(game => currentGame(game))
     .then(postBestTimes(user))
+}
+
+function introToGame(){
+    let transition = document.getElementById("transition-page")
+    introSlot.innerHTML = ''
+    transition.remove()
 }
