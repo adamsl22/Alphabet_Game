@@ -210,7 +210,7 @@ function currentGame(game){
         letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
         setInterval(letterFall, 40)
 
-        let x = Math.random() * 300;
+        let x = Math.random() * 250;
         let y = 0
         let dy = 1
         let dx
@@ -285,7 +285,7 @@ function currentGame(game){
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
                     break
                 case 102:
-                    letterBomb.remove()
+                    letterBomb.src = './images/Letterbombs Expl Clear.jpg'
                     break
             }
         }
