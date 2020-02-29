@@ -242,43 +242,43 @@ function currentGame(game){
                 case 50:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 51:
+                case 52:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 65:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 66:
+                case 67:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 75:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 76:
+                case 77:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 80:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 81:
+                case 82:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 85:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 86:
+                case 87:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 90:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 91:
+                case 92:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 95:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
                     break
-                case 96:
+                case 97:
                     letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
                     break
                 case 100:
