@@ -6,7 +6,7 @@ header {
     text-align: center;
 }
 
-button {
+.button {
     border: 2px solid #34495e;
     background-color: #6844df;
     color: whitesmoke;
@@ -15,10 +15,32 @@ button {
     font-family: "montserrat";
 }
 
-.letterbomb {
+/* @keyframes ticking {
+    49% {color: whitesmoke;}
+    50% {color: #c86c03;}
+    51% {color: whitesmoke;}
+    64% {color: whitesmoke;}
+    65% {color: #c86c03;}
+    66% {color: whitesmoke;}
+    74% {color: whitesmoke;}
+    75% {color: #c86c03;}
+    76% {color: whitesmoke;}
+    80% {color: #c86c03;}
+    81% {color: whitesmoke;}
+    85% {color: #c86c03;}
+    86% {color: whitesmoke;}
+    90% {color: #c86c03;}
+    91% {color: whitesmoke;}
+    95% {color: #c86c03;}
+    96% {color: whitesmoke;}
+} */
+
+/* .letterbomb {
     color: whitesmoke;
     font-size: 25px;
-}
+    animation-name: ticking;
+    animation-duration: 4s;
+} */
 
 #best-times {
     position: absolute;
