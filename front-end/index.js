@@ -31,16 +31,16 @@ const instructions = `<h3>Instructions:<h3>`
 const playerForm = `
     <form id='form'>
         <input type="text" name="name" placeholder="Username" value="" />
-        <input type="submit" value="Submit" />
+        <input type="submit" class="button" value="Submit" />
     </form>
 `    
 
 function introPage(){
     introSlot.innerHTML = `
         <h1>Welcome</h1>
-        <button>Returning Player</button>
+        <button class="button">Returning Player</button>
         <h2>or</h2>
-        <button>New Player</button>
+        <button class="button">New Player</button>
     `
 }
 
@@ -129,6 +129,7 @@ function postBestTimes(user){
 let spaceKeyDetector = document.getElementById('pause')
 let lettersArea = document.getElementById('letters-area')
 let enabled = false
+let enableAnimation = true
 
 let timer = document.getElementById('clock')
 let seconds = 0
@@ -158,16 +159,17 @@ function currentGame(game){
                     break
                 case 'Press Space to Pause Game':
                     enabled = false
+                    enableAnimation = false
                     spaceKeyDetector.innerText = 'Press Space to Resume Game'
                     break
                 case 'Press Space to Resume Game':
                     enabled = true
+                    enableAnimation = true
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
                     break
             }
         }
     })
-
     setInterval(incrementSeconds, 1000)
     setInterval(fetchLetters, 500)
 
@@ -186,46 +188,106 @@ function currentGame(game){
         let letterSample
         if (prob === 10){
             fetch(LG_URL)
-            .then(resp.json())
+            .then(resp => resp.json())
             .then(lgs => {
                 lgCharacters = lgs.map(lg => lg.letter.character)
-                uncaughtLetters = letterArray.filter(letter => !lgCharacters.include(letter))
+                uncaughtLetters = letterArray.filter(letter => !lgCharacters.includes(letter))
                 letterSample = uncaughtLetters[Math.floor(Math.random()*uncaughtLetters.length)]
+                letterbomb(letterSample)
             })
         } else {
             letterSample = letterArray[Math.floor(Math.random()*letterArray.length)]
+            letterbomb(letterSample)
         }
-        letterbomb(letterSample)
     }
 
     const canvas = document.getElementById('canvas')
+    let ctx = canvas.getContext("2d");
+
     function letterbomb(letter){
-        let letterBomb = document.createElement('span')
-        letterBomb.className = letterbomb
-        letterBomb.innerText = letter
-        canvas.append(letterBomb)
+        let letterBomb = document.createElement('img')
+        letterBomb.height = 30
+        letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+        setInterval(letterFall, 40)
+
+        let x = Math.random() * 250;
+        let y = 0
+        let dy = 1
+        let dx
+        if (x > canvas.width/2){
+            dx = Math.random() * -1;
+        } else {
+            dx = Math.random();
+        }
+        let letterTimer = 0
+
+        function drawLb(){
+            ctx.beginPath()
+            ctx.drawImage(letterBomb,x,y)
+            ctx.closePath()
+        }
+
+        function letterFall(){
+            if (enableAnimation === true){
+                letterTimer += 1
+                ticking(letterTimer)
+                drawLb()
+                x += dx
+                y += dy
+            }
+        }
+
+        function ticking(time){
+            switch (time){
+                case 50:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 52:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 65:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 67:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 75:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 77:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 80:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 82:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 85:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 87:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 90:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 92:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 95:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    break
+                case 97:
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    break
+                case 100:
+                    letterBomb.src = './images/Letterbombs Explosion.jpg'
+                    break
+                case 102:
+                    letterBomb.src = './images/Letterbombs Expl Clear.jpg'
+                    break
+            }
+        }
     }
-}
-
-
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-
-function drawBall() {
-ctx.beginPath();
-ctx.arc(x, y, 10, 0, Math.PI*2);
-ctx.fillStyle = "#0095DD";
-ctx.fill();
-ctx.closePath();
-}
-
-function draw() {
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-drawBall();
-x += dx;
-y += dy;
 }
