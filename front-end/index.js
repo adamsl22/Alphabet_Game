@@ -214,18 +214,22 @@ function currentGame(game){
         letterBomb.ondragstart = drag
         canvas.appendChild(letterBomb)
         letterBomb.style.position = 'absolute'
+        // letterBomb.style.transform = `translateX(${x}px)`
         setInterval(letterFall, 40)
 
+        let x = (Math.random() * 250);
+        document.documentElement.style.setProperty('--tx', `${x}`);
         //let y = 0
         //let dy = 1
-        let x = (Math.random() * 250);
-        let dx
+        // let dx
         if (x > canvas.width/2){
             dx = Math.random() * -1;
         } else {
             dx = Math.random();
         }
+        document.documentElement.style.setProperty('--dx', `${dx}`);
         let letterTimer = 0
+        console.log(document.documentElement.style.getPropertyValue('--dx'))
 
         // function drawLb(){
         //     ctx.beginPath()
@@ -236,9 +240,9 @@ function currentGame(game){
         function letterFall(){
             if (enableAnimation === true){
                 letterTimer += 1
-                ticking(letterTimer)
-                letterBomb.style.transform = `translate(${dx}px,1px)`
+                // letterBomb.style.transform = `translateX(${dx}px)`
                 // letterBomb.style.transform = 'translateY(1px)'
+                ticking(letterTimer)
                 // drawLb()
                 // x += dx
                 // y += dy
@@ -246,7 +250,6 @@ function currentGame(game){
         }
 
         function drag(e){
-            enableAnimation = false
             e.dataTransfer.setData('text', e.target.dataset.id)
         }
 
