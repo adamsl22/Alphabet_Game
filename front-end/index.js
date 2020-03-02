@@ -9,6 +9,7 @@ let introSlot = document.getElementById('intro-slot')
 document.addEventListener('DOMContentLoaded', () => {
     introPage()
     buttons()
+    dragAndDrop()
 })
 
 function buttons(){
@@ -46,6 +47,7 @@ function introPage(){
 
 function addUser(){
     let userForm = document.getElementById("form")
+
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
 
@@ -74,18 +76,13 @@ function addUser(){
 
 function returningUser(){
     let userForm = document.getElementById("form")
+
     userForm.addEventListener('submit', (e) => {
         e.preventDefault()
         fetch(USERS_URL)
         .then(resp => resp.json())
         .then(users => currentUser(users.filter(user => user.name === userForm.name.value)[0]))
     })
-}
-
-function introToGame(){
-    let transition = document.getElementById("transition-page")
-    introSlot.innerHTML = ''
-    transition.remove()
 }
 
 function currentUser(user){
@@ -103,28 +100,40 @@ function currentUser(user){
     .then(game => currentGame(game))
 }
 
+function introToGame(){
+    let transition = document.getElementById("transition-page")
+    introSlot.innerHTML = ''
+    transition.remove()
+}
+
 function postBestTimes(user){
-    let bestTimesSlot = document.getElementById('best-times')
     fetch(GAMES_URL)
     .then(resp => resp.json())
-    .then(games => {
-        const successfulGames = games.filter(game => game.result === true)
-        const successfulGamesSeconds = successfulGames.map(game => game.seconds)
-        const universalBestTime = Math.min(...successfulGamesSeconds)
-        const userWins = successfulGames.filter(game => game.user_id === user.id)
-        let personalBestTime
-        if (userWins.length > 0){
-            const userWinsSeconds = userWins.map(game => game.seconds)
-            personalBestTime = Math.min(...userWinsSeconds)
-        } else {
-            personalBestTime = '--'
-        }
-        bestTimesSlot.innerHTML = `
+    .then(games => findBestTime(user, games))      
+}
+
+function findBestTime(user, games){
+    const successfulGames = games.filter(game => game.result === true)
+    const successfulGamesSeconds = successfulGames.map(game => game.seconds)
+    const universalBestTime = Math.min(...successfulGamesSeconds)
+    const userWins = successfulGames.filter(game => game.user_id === user.id)
+
+    let bestTimesSlot = document.getElementById('best-times')
+    let personalBestTime
+
+    if (userWins.length > 0){
+        const userWinsSeconds = userWins.map(game => game.seconds)
+        personalBestTime = Math.min(...userWinsSeconds)
+    } else {
+        personalBestTime = '--'
+    }
+    bestTimesSlot.innerHTML = `
         <span>Universal Best Time: <span id='top-time'>${universalBestTime} seconds</span><br>
         Personal Best Time: <span id='top-time'>${personalBestTime} seconds</span></span>
     `        
-    })
 }
+
+
 
 let spaceKeyDetector = document.getElementById('pause')
 let lettersArea = document.getElementById('letters-area')
@@ -210,8 +219,6 @@ function currentGame(game){
         letterBomb.className = 'letterbomb'
         letterBomb.dataset.id = letter.id
         letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
-        letterBomb.draggable = true
-        letterBomb.ondragstart = drag
         canvas.appendChild(letterBomb)
         letterBomb.style.position = 'absolute'
         // letterBomb.style.transform = `translateX(${x}px)`
@@ -248,11 +255,6 @@ function currentGame(game){
                 // y += dy
             }
         }
-
-        function drag(e){
-            e.dataTransfer.setData('text', e.target.dataset.id)
-        }
-
 
         function ticking(time){
             switch (time){
@@ -307,4 +309,58 @@ function currentGame(game){
             }
         }
     }
+}
+
+
+function dragAndDrop(){
+    let dragged;
+
+    /* events fired on the draggable target */
+    document.addEventListener("drag", function(event){
+    }, false);
+
+    document.addEventListener("dragstart", function(event) {
+    // store a ref. on the dragged elem
+    dragged = event.target;
+    // make it half transparent
+    event.target.style.opacity = .5;
+    }, false);
+
+    document.addEventListener("dragend", function( event ) {
+    // reset the transparency
+    event.target.style.opacity = "";
+    }, false);
+    /* events fired on the drop targets */
+    document.addEventListener("dragover", function( event ) {
+    // prevent default to allow drop
+    event.preventDefault();
+    }, false);
+
+    document.addEventListener("dragenter", function( event ) {
+    // highlight potential drop target when the draggable element enters it
+    if ( event.target.id === "right-basket" ) {
+        event.target.style.background = "white";
+    }
+
+    }, false);
+
+    document.addEventListener("dragleave", function( event ) {
+    // reset background of potential drop target when the draggable element leaves it
+    if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
+        event.target.style.background = "";
+    }
+
+    }, false);
+
+    document.addEventListener("drop", function( event ) {
+    // prevent default action (open as link for some elements)
+    event.preventDefault();
+    // move dragged elem to the selected drop target
+    if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
+        event.target.style.background = "";
+        dragged.parentNode.removeChild(dragged);
+        event.target.appendChild(dragged);
+    }
+
+    }, false)
 }
