@@ -9,7 +9,6 @@ let introSlot = document.getElementById('intro-slot')
 document.addEventListener('DOMContentLoaded', () => {
     introPage()
     buttons()
-    dragAndDrop()
 })
 
 function buttons(){
@@ -156,6 +155,7 @@ function currentGame(game){
     .then(letters => letters.forEach(letter => {
         let letterSlot = document.createElement('span')
         letterSlot.innerText = ` ${letter.character}`
+        letterSlot.className = 'blackletterslot'
         lettersArea.append(letterSlot)
     }))
 
@@ -193,36 +193,36 @@ function currentGame(game){
     }
 
     function sampleLetters(letters, prob){
-        let letterArray = letters.map(letter => letter.character)
         let letterSample
         if (prob === 10){
             fetch(LG_URL)
             .then(resp => resp.json())
             .then(lgs => {
-                lgCharacters = lgs.map(lg => lg.letter.character)
-                uncaughtLetters = letterArray.filter(letter => !lgCharacters.includes(letter))
+                lgLetters = lgs.map(lg => lg.letter)
+                uncaughtLetters = letters.filter(letter => !lgLetters.includes(letter))
                 letterSample = uncaughtLetters[Math.floor(Math.random()*uncaughtLetters.length)]
                 letterbomb(letterSample)
             })
         } else {
-            letterSample = letterArray[Math.floor(Math.random()*letterArray.length)]
+            letterSample = letters[Math.floor(Math.random()*letters.length)]
             letterbomb(letterSample)
         }
     }
 
     const canvas = document.getElementById('canvas')
     //let ctx = canvas.getContext("2d");
+    dragAndDrop()
 
     function letterbomb(letter){
         let letterBomb = document.createElement('img')
-        letterBomb.height = 30
+        letterBomb.height = 40
         letterBomb.className = 'letterbomb'
         letterBomb.dataset.id = letter.id
-        letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+        letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
         canvas.appendChild(letterBomb)
         letterBomb.style.position = 'absolute'
         // letterBomb.style.transform = `translateX(${x}px)`
-        setInterval(letterFall, 40)
+        setInterval(letterFall, 50)
 
         let x = (Math.random() * 250);
         document.documentElement.style.setProperty('--tx', `${x}`);
@@ -236,7 +236,7 @@ function currentGame(game){
         }
         document.documentElement.style.setProperty('--dx', `${dx}`);
         let letterTimer = 0
-        console.log(document.documentElement.style.getPropertyValue('--dx'))
+        //console.log(document.documentElement.style.getPropertyValue('--dx'))
 
         // function drawLb(){
         //     ctx.beginPath()
@@ -259,46 +259,46 @@ function currentGame(game){
         function ticking(time){
             switch (time){
                 case 50:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 52:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 65:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 67:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 75:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 77:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 80:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 82:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 85:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 87:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 90:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 92:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 95:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}O.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
                     break
                 case 97:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
                     break
                 case 100:
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
@@ -309,58 +309,91 @@ function currentGame(game){
             }
         }
     }
+
+    function dragAndDrop(){
+        let dragged;
+
+        /* events fired on the draggable target */
+        document.addEventListener("drag", function(event){
+        }, false);
+
+        document.addEventListener("dragstart", function(event) {
+        // store a ref. on the dragged elem
+        if (event.target.className === 'letterbomb'){
+            dragged = event.target;
+        }
+        // make it half transparent
+        event.target.style.opacity = .5;
+        }, false);
+
+        document.addEventListener("dragend", function( event ) {
+        // reset the transparency
+        event.target.style.opacity = "";
+        }, false);
+        /* events fired on the drop targets */
+        document.addEventListener("dragover", function( event ) {
+        // prevent default to allow drop
+        event.preventDefault();
+        }, false);
+
+        document.addEventListener("dragenter", function( event ) {
+        // highlight potential drop target when the draggable element enters it
+        if ( event.target.id === "right-basket" ) {
+            event.target.style.background = "white";
+        }
+
+        }, false);
+
+        document.addEventListener("dragleave", function( event ) {
+        // reset background of potential drop target when the draggable element leaves it
+        if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
+            event.target.style.background = "";
+        }
+
+        }, false);
+
+        document.addEventListener("drop", function( event ) {
+        // prevent default action (open as link for some elements)
+        event.preventDefault();
+        // move dragged elem to the selected drop target
+        if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
+            event.target.style.background = "";
+            dragged.parentNode.removeChild(dragged);
+            event.target.appendChild(dragged);
+        }
+        if (event.target.id === "right-basket"){
+            fetch(LG_URL,{
+                method: "Post",
+                headers: {
+                    'content-type': 'application/json',
+                    accept: 'application/json'
+                },
+                body: JSON.stringify({'game_id':game.id,'letter_id':dragged.dataset.id})
+            })
+            .then(resp => resp.json())
+            .then(lg => useLg(lg))
+        }
+        }, false)
+    }
 }
 
+function useLg(lg){
+    const letterSlotsArray = Array.from(lettersArea.getElementsByTagName('span'))
+    fetch(LETTERS_URL)
+    .then(resp => resp.json())
+    .then(letters => illuminateLetter(letters))
 
-function dragAndDrop(){
-    let dragged;
-
-    /* events fired on the draggable target */
-    document.addEventListener("drag", function(event){
-    }, false);
-
-    document.addEventListener("dragstart", function(event) {
-    // store a ref. on the dragged elem
-    dragged = event.target;
-    // make it half transparent
-    event.target.style.opacity = .5;
-    }, false);
-
-    document.addEventListener("dragend", function( event ) {
-    // reset the transparency
-    event.target.style.opacity = "";
-    }, false);
-    /* events fired on the drop targets */
-    document.addEventListener("dragover", function( event ) {
-    // prevent default to allow drop
-    event.preventDefault();
-    }, false);
-
-    document.addEventListener("dragenter", function( event ) {
-    // highlight potential drop target when the draggable element enters it
-    if ( event.target.id === "right-basket" ) {
-        event.target.style.background = "white";
+    function illuminateLetter(letters){
+        const targetLetter = letters.filter(letter => letter.id === lg.letter_id)[0].character
+        const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => letterSlot.innerText === ` ${targetLetter}`))[0]
+        if (targetSlot.className === 'blackletterslot'){
+            targetSlot.className = 'whiteletterslot'
+        } else if (targetSlot.className === 'whiteletterslot'){
+            strike()
+        }
     }
+}
 
-    }, false);
-
-    document.addEventListener("dragleave", function( event ) {
-    // reset background of potential drop target when the draggable element leaves it
-    if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
-        event.target.style.background = "";
-    }
-
-    }, false);
-
-    document.addEventListener("drop", function( event ) {
-    // prevent default action (open as link for some elements)
-    event.preventDefault();
-    // move dragged elem to the selected drop target
-    if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
-        event.target.style.background = "";
-        dragged.parentNode.removeChild(dragged);
-        event.target.appendChild(dragged);
-    }
-
-    }, false)
+function strike(){
+    console.log('strike')
 }

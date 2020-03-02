@@ -15,220 +15,177 @@ header {
     font-family: "montserrat";
 }
 
-:root {
+/* :root {
     --tx: 175px;
     --dx: 0px;
-}
+} */
 
 @keyframes letterfall {
-    0% {transform:
-        translateX(175px)
-    }
     2% {transform:
         translateY(20%)
-        translateX(300px)
+        translateX(100%)
     }
     4% {transform:
         translateY(40%)
-        translateX(150px)
+        translateX(125%)
     }
     6% {transform:
         translateY(60%)
-        translateX(180px)
+        translateX(200%)
     }
     8% {transform:
         translateY(80%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     10% {transform:
         translateY(100%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     12% {transform:
         translateY(120%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     14% {transform:
         translateY(140%)
-        translateX(var(--dx, 0px))
+        translateX(500%)
     }
     16% {transform:
         translateY(160%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     18% {transform:
         translateY(180%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     20% {transform:
         translateY(200%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     22% {transform:
         translateY(220%)
-        translateX(var(--dx, 0px))
+        translateX(200%)
     }
     24% {transform:
         translateY(240%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     26% {transform:
         translateY(260%)
-        translateX(var(--dx, 0px))
+        translateX(100%)
     }
     28% {transform:
         translateY(280%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     30% {transform:
         translateY(300%)
-        translateX(var(--dx, 0px))
+        translateX(200%)
     }
     32% {transform:
         translateY(320%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     34% {transform:
         translateY(340%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     36% {transform:
         translateY(360%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     38% {transform:
         translateY(380%)
-        translateX(var(--dx, 0px))
+        translateX(500%)
     }
     40% {transform:
         translateY(400%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     42% {transform:
         translateY(420%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     44% {transform:
         translateY(440%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     46% {transform:
         translateY(460%)
-        translateX(var(--dx, 0px))
+        translateX(200%)
     }
     48% {transform:
         translateY(480%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     50% {transform:
         translateY(500%)
-        translateX(var(--dx, 0px))
+        translateX(100%)
     }
     52% {transform:
         translateY(520%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     54% {transform:
         translateY(540%)
-        translateX(var(--dx, 0px))
+        translateX(200%)
     }
     56% {transform:
         translateY(560%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     58% {transform:
         translateY(580%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     60% {transform:
         translateY(600%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     62% {transform:
         translateY(620%)
-        translateX(var(--dx, 0px))
+        translateX(500%)
     }
     64% {transform:
         translateY(640%)
-        translateX(var(--dx, 0px))
+        translateX(475%)
     }
     66% {transform:
         translateY(660%)
-        translateX(var(--dx, 0px))
+        translateX(400%)
     }
     68% {transform:
         translateY(680%)
-        translateX(var(--dx, 0px))
+        translateX(300%)
     }
     70% {transform:
         translateY(700%)
-        translateX(var(--dx, 0px))
+        translateX(200%)
     }
     72% {transform:
         translateY(720%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     74% {transform:
         translateY(740%)
-        translateX(var(--dx, 0px))
+        translateX(100%)
     }
     76% {transform:
         translateY(760%)
-        translateX(var(--dx, 0px))
+        translateX(125%)
     }
     78% {transform:
-        translateY(780%)
-        translateX(var(--dx, 0px))
-    }
-    80% {transform:
-        translateY(800%)
-        translateX(var(--dx, 0px))
-    }
-    82% {transform:
-        translateY(820%)
-        translateX(var(--dx, 0px))
-    }
-    84% {transform:
-        translateY(840%)
-        translateX(var(--dx, 0px))
-    }
-    86% {transform:
-        translateY(860%)
-        translateX(var(--dx, 0px))
-    }
-    88% {transform:
-        translateY(880%)
-        translateX(var(--dx, 0px))
-    }
-    90% {transform:
-        translateY(900%)
-        translateX(var(--dx, 0px))
-    }
-    92% {transform:
-        translateY(920%)
-        translateX(var(--dx, 0px))
-    }
-    94% {transform:
-        translateY(940%)
-        translateX(var(--dx, 0px))
-    }
-    96% {transform:
-        translateY(960%)
-        translateX(var(--dx, 0px))
-    }
-    98% {transform:
-        translateY(980%)
-        translateX(var(--dx, 0px))
+        translateY(770%)
+        translateX(200%)
     }
     100% {transform: 
-        translateY(1000%)
-        translateX(var(--dx, 0px))
+        translateY(770%)
+        translateX(300%)
     }
 }
 
 .letterbomb {
     animation-name: letterfall;
-    animation-duration: 5s;
+    animation-duration: 6s;
 }
 
 #best-times {
@@ -275,6 +232,14 @@ header {
     top: 35%;
     left: 70%;
     font-size: 40px;
+}
+
+.blackletterslot {
+    color: black;
+}
+
+.whiteletterslot {
+    color: white;
 }
 
 #left-basket {
