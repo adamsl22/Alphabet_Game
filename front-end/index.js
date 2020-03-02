@@ -165,9 +165,6 @@ function currentGame(game){
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
                     break
             }
-            if (enabled === true){
-                setInterval(incrementSeconds, 1000)
-            }
         }
     })
 
