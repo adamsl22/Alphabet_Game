@@ -202,17 +202,23 @@ function currentGame(game){
     }
 
     const canvas = document.getElementById('canvas')
-    let ctx = canvas.getContext("2d");
+    //let ctx = canvas.getContext("2d");
 
     function letterbomb(letter){
         let letterBomb = document.createElement('img')
         letterBomb.height = 30
+        letterBomb.className = 'letterbomb'
+        letterBomb.dataset.id = letter.id
         letterBomb.src = `./images/Letters/Letterbombs ${letter}W.jpg`
+        letterBomb.draggable = true
+        letterBomb.ondragstart = drag
+        canvas.appendChild(letterBomb)
+        letterBomb.style.position = 'absolute'
         setInterval(letterFall, 40)
 
-        let x = Math.random() * 250;
-        let y = 0
-        let dy = 1
+        //let y = 0
+        //let dy = 1
+        let x = (Math.random() * 250);
         let dx
         if (x > canvas.width/2){
             dx = Math.random() * -1;
@@ -221,21 +227,29 @@ function currentGame(game){
         }
         let letterTimer = 0
 
-        function drawLb(){
-            ctx.beginPath()
-            ctx.drawImage(letterBomb,x,y)
-            ctx.closePath()
-        }
+        // function drawLb(){
+        //     ctx.beginPath()
+        //     ctx.drawImage(letterBomb,x,y)
+        //     ctx.closePath()
+        // }
 
         function letterFall(){
             if (enableAnimation === true){
                 letterTimer += 1
                 ticking(letterTimer)
-                drawLb()
-                x += dx
-                y += dy
+                letterBomb.style.transform = `translate(${dx}px,1px)`
+                // letterBomb.style.transform = 'translateY(1px)'
+                // drawLb()
+                // x += dx
+                // y += dy
             }
         }
+
+        function drag(e){
+            enableAnimation = false
+            e.dataTransfer.setData('text', e.target.dataset.id)
+        }
+
 
         function ticking(time){
             switch (time){
@@ -285,7 +299,7 @@ function currentGame(game){
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
                     break
                 case 102:
-                    letterBomb.src = './images/Letterbombs Expl Clear.jpg'
+                    letterBomb.remove()
                     break
             }
         }

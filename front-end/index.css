@@ -15,32 +15,65 @@ header {
     font-family: "montserrat";
 }
 
-/* @keyframes ticking {
-    49% {color: whitesmoke;}
-    50% {color: #c86c03;}
-    51% {color: whitesmoke;}
-    64% {color: whitesmoke;}
-    65% {color: #c86c03;}
-    66% {color: whitesmoke;}
-    74% {color: whitesmoke;}
-    75% {color: #c86c03;}
-    76% {color: whitesmoke;}
-    80% {color: #c86c03;}
-    81% {color: whitesmoke;}
-    85% {color: #c86c03;}
-    86% {color: whitesmoke;}
-    90% {color: #c86c03;}
-    91% {color: whitesmoke;}
-    95% {color: #c86c03;}
-    96% {color: whitesmoke;}
-} */
+@keyframes letterfall {
+    2% {transform: translateY(20%)}
+    4% {transform: translateY(40%)}
+    6% {transform: translateY(60%)}
+    8% {transform: translateY(80%)}
+    10% {transform: translateY(100%)}
+    12% {transform: translateY(120%)}
+    14% {transform: translateY(140%)}
+    16% {transform: translateY(160%)}
+    18% {transform: translateY(180%)}
+    20% {transform: translateY(200%)}
+    22% {transform: translateY(220%)}
+    24% {transform: translateY(240%)}
+    26% {transform: translateY(260%)}
+    28% {transform: translateY(280%)}
+    30% {transform: translateY(300%)}
+    32% {transform: translateY(320%)}
+    34% {transform: translateY(340%)}
+    36% {transform: translateY(360%)}
+    38% {transform: translateY(380%)}
+    40% {transform: translateY(400%)}
+    42% {transform: translateY(420%)}
+    44% {transform: translateY(440%)}
+    46% {transform: translateY(460%)}
+    48% {transform: translateY(480%)}
+    50% {transform: translateY(500%)}
+    52% {transform: translateY(520%)}
+    54% {transform: translateY(540%)}
+    56% {transform: translateY(560%)}
+    58% {transform: translateY(580%)}
+    60% {transform: translateY(600%)}
+    62% {transform: translateY(620%)}
+    64% {transform: translateY(640%)}
+    66% {transform: translateY(660%)}
+    68% {transform: translateY(680%)}
+    70% {transform: translateY(700%)}
+    72% {transform: translateY(720%)}
+    74% {transform: translateY(740%)}
+    76% {transform: translateY(760%)}
+    78% {transform: translateY(780%)}
+    80% {transform: translateY(800%)}
+    82% {transform: translateY(820%)}
+    84% {transform: translateY(840%)}
+    86% {transform: translateY(860%)}
+    88% {transform: translateY(880%)}
+    90% {transform: translateY(900%)}
+    92% {transform: translateY(920%)}
+    94% {transform: translateY(940%)}
+    96% {transform: translateY(960%)}
+    98% {transform: translateY(980%)}
+    100% {transform: translateY(1000%)}
+}
 
-/* .letterbomb {
+.letterbomb {
     color: whitesmoke;
     font-size: 25px;
-    animation-name: ticking;
-    animation-duration: 4s;
-} */
+    animation-name: letterfall;
+    animation-duration: 5s;
+}
 
 #best-times {
     position: absolute;
