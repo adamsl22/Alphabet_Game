@@ -242,16 +242,10 @@ function currentGame(game){
             switch (enabled){
                 case true:
                     letterBomb.style.webkitAnimationPlayState = "running"
+                    enableAnimation = true
                     break
                 case false:
                     letterBomb.style.webkitAnimationPlayState = "paused"
-                    break
-            }
-            switch (letterBomb.style.webkitAnimationPlayState){
-                case "running":
-                    enableAnimation = true
-                    break
-                case "paused":
                     enableAnimation = false
                     break
             }
@@ -303,7 +297,9 @@ function currentGame(game){
                     break
                 case 100:
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
-                    strike()
+                    if (Array.from(canvas.childNodes).includes(letterBomb)){
+                        strike()
+                    }
                     break
                 case 102:
                     letterBomb.remove()
@@ -361,7 +357,7 @@ function currentGame(game){
         if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
             event.target.style.background = "";
             dragged.parentNode.removeChild(dragged);
-            event.target.appendChild(dragged);
+            // event.target.appendChild(dragged);
         }
         if (event.target.id === "right-basket"){
             fetch(LG_URL,{
@@ -386,7 +382,7 @@ function currentGame(game){
 
         function illuminateLetter(letters){
             const targetLetter = letters.filter(letter => letter.id === lg.letter_id)[0].character
-            const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => letterSlot.innerText === ` ${targetLetter}`))[0]
+            const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => Array.from(letterSlot.innerText.split(" ")).includes(targetLetter)))[0]
             switch (targetSlot.className){
                 case 'blackletterslot':
                     targetSlot.className = 'whiteletterslot'
