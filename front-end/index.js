@@ -22,6 +22,9 @@ function buttons(){
                 introSlot.innerHTML = `${instructions}<br>${playerForm}`
                 addUser()
                 break
+            case 'Play Again':
+                document.location.reload()
+                break
         }
     })
 }
@@ -181,11 +184,11 @@ function currentGame(game){
         }
     })
     setInterval(incrementSeconds, 1000)
-    setInterval(fetchLetters, 1000)
+    setInterval(fetchLetters, 1500)
 
     function fetchLetters(){
         if (enabled === true){
-            const probArray = [1,2,3,4,5,6,7,8,9,10]
+            const probArray = [1,2,3,4,5,6,7,8]
             const prob = probArray[Math.floor(Math.random()*probArray.length)]
             fetch(LETTERS_URL)
             .then(resp => resp.json())
@@ -195,7 +198,7 @@ function currentGame(game){
 
     function sampleLetters(letters, prob){
         let letterSample
-        if (prob === 10){
+        if (prob === 1){
             fetch(LG_URL)
             .then(resp => resp.json())
             .then(lgs => {
@@ -428,7 +431,11 @@ function strike(){
 function loss(){
     enabled = false
     transition.style.display = 'block'
-    introSlot.innerText = 'Game Over'
+    introSlot.innerHTML = `
+    <h1>Game Over</h1>
+    <button class='button'>Play Again</button><br>
+    <h3>Best Times</h3>
+    `
     fetchHighScores()
 }
 
@@ -437,7 +444,11 @@ function checkForWin(game){
     if (whiteLetters.length === 26){
         enabled = false
         transition.style.display = 'block'
-        introSlot.innerText = 'You Win!'
+        introSlot.innerHTML = `
+            <h1>You Win!</h1>
+            <button class='button'>Play Again</button><br>
+            <h3>Best Times</h3>
+        `
         fetch(`${GAMES_URL}/${game.id}`,{
             method: 'PATCH',
             headers: {
@@ -461,19 +472,30 @@ function postHighScores(games){
         return game.result === true
     })
 
-    let winScores = wonGames.map(function(game){
-        return game.seconds
-    })
+    let topTen = wonGames.sort(function(a,b){ return a.seconds - b.seconds }).slice(0, 10)
 
-    let topTen = winScores.sort(function(a,b){ return a - b }).slice(0, 10)
-     
-    topTen.forEach(function(score){
-        let scorePost = document.createElement("ul")
-
-        scorePost.innerHTML = `
-            ${score}
-        `
+    fetch(USERS_URL)
+    .then(resp => resp.json())
+    .then(users => topScorers(users))
+    
+    function topScorers(users){
         
-        introSlot.append(scorePost)
-    })
+        let scoreTable = document.createElement("table")
+        scoreTable.className = 'grid'
+        scoreTable.innerHTML = `
+        <tr><th>Player</th><th>Time(s)</th></tr>
+        `
+
+        topTen.forEach(hs => highScoreHash(hs))
+        function highScoreHash(hs){
+            let scorer = users.find(user => user.id === hs.user_id).name
+            let score = hs.seconds
+            let scorePost = document.createElement('tr')
+            scorePost.innerHTML = `
+                <td>${scorer}</td><td>${score}</td>
+            `
+            scoreTable.append(scorePost)
+        }
+        introSlot.append(scoreTable)
+    }
 }

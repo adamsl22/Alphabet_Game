@@ -15,6 +15,11 @@ header {
     font-family: "montserrat";
 }
 
+.grid {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 :root {
     --tx: 175;
     --dx: 175;
@@ -202,7 +207,7 @@ header {
     background-color: black;
     height: 350px;
     width: 350px;
-    top: 21%;
+    top: 22%;
     left: 25%;
 }
 
