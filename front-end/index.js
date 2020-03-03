@@ -242,16 +242,10 @@ function currentGame(game){
             switch (enabled){
                 case true:
                     letterBomb.style.webkitAnimationPlayState = "running"
+                    enableAnimation = true
                     break
                 case false:
                     letterBomb.style.webkitAnimationPlayState = "paused"
-                    break
-            }
-            switch (letterBomb.style.webkitAnimationPlayState){
-                case "running":
-                    enableAnimation = true
-                    break
-                case "paused":
                     enableAnimation = false
                     break
             }
@@ -361,7 +355,7 @@ function currentGame(game){
         if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
             event.target.style.background = "";
             dragged.parentNode.removeChild(dragged);
-            event.target.appendChild(dragged);
+            // event.target.appendChild(dragged);
         }
         if (event.target.id === "right-basket"){
             fetch(LG_URL,{
