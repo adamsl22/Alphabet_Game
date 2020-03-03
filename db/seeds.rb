@@ -37,9 +37,3 @@ Letter.create(character: "Z")
 
 Game.destroy_all
 User.destroy_all
-
-u1 = User.create(name: "Martin")
-Game.create({seconds: 10, result: true, user_id: u1.id})
-Game.create({seconds: 5, result: true, user_id: u1.id})
-User.create(name: 'Test')
-Game.create(seconds: 999, result: true, user_id: 1)

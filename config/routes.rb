@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get "/games", to: "games#games"
   post "/games", to: "games#newGame"
+  patch "/games/:id", to: "games#updateGame"
 
   get "/lgs", to: "games#lgs"
   post "/lgs", to: "games#newLg"
