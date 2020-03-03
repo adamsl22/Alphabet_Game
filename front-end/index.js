@@ -338,7 +338,7 @@ function dragAndDrop(){
 
     document.addEventListener("dragenter", function( event ) {
     // highlight potential drop target when the draggable element enters it
-    if ( event.target.id === "right-basket" ) {
+    if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
         event.target.style.background = "white";
     }
 
