@@ -297,7 +297,9 @@ function currentGame(game){
                     break
                 case 100:
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
-                    strike()
+                    if (Array.from(canvas.childNodes).includes(letterBomb)){
+                        strike()
+                    }
                     break
                 case 102:
                     letterBomb.remove()
@@ -380,7 +382,7 @@ function currentGame(game){
 
         function illuminateLetter(letters){
             const targetLetter = letters.filter(letter => letter.id === lg.letter_id)[0].character
-            const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => letterSlot.innerText === ` ${targetLetter}`))[0]
+            const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => Array.from(letterSlot.innerText.split(" ")).includes(targetLetter)))[0]
             switch (targetSlot.className){
                 case 'blackletterslot':
                     targetSlot.className = 'whiteletterslot'
