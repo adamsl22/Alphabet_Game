@@ -25,11 +25,34 @@ function buttons(){
             case 'Play Again':
                 document.location.reload()
                 break
+            case 'Easy':
+                difficulty = 'easy'
+                introToGame()
+                break
+            case 'Medium':
+                difficulty = 'medium'
+                introToGame()
+                break
+            case 'Hard':
+                difficulty = 'hard'
+                introToGame()
+                break
+            case 'Unwinnable':
+                difficulty = 'death'
+                introToGame()
+                break
         }
     })
 }
 
-const instructions = `<h3>Instructions:<h3>`
+const instructions = `
+    <h3>Instructions:<h3>
+    Drag one of each letter into the 'Keep' basket.<br>
+    Drag all remaining letters into the 'Discard' basket.<br>
+    Duplicate letters in the 'Keep' basket will give you a strike.<br>
+    If a letter reaches the bottom of the play area<br>it will explode and give you a strike.<br>
+    Five strikes and you lose.<br><br>
+    `
 
 const playerForm = `
     <form id='form'>
@@ -88,7 +111,7 @@ function returningUser(){
 }
 
 function currentUser(user){
-    introToGame()
+    difficultySelection()
     postBestTimes(user)
     fetch(GAMES_URL,{
         method: "Post",
@@ -100,6 +123,17 @@ function currentUser(user){
     })
     .then(resp => resp.json())
     .then(game => currentGame(game))
+}
+
+let difficulty
+function difficultySelection(){
+    introSlot.innerHTML = `
+    <h2>Select Difficulty</h2>
+    <button class='button'>Easy</button><br><br>
+    <button class='button'>Medium</button><br><br>
+    <button class='button'>Hard</button><br><br>
+    <button class='button'>Unwinnable</button>
+    `
 }
 
 let transition = document.getElementById("transition-page")
@@ -170,7 +204,7 @@ function currentGame(game){
             switch (spaceKeyDetector.innerText){
                 case 'Press SPACE to Start Game':
                     spaceKeyDetector.innerText = 'Press Space to Pause Game'
-                    enabled = true
+                    startGame()
                     break
                 case 'Press Space to Pause Game':
                     enabled = false
@@ -183,12 +217,28 @@ function currentGame(game){
             }
         }
     })
-    setInterval(incrementSeconds, 1000)
-    setInterval(fetchLetters, 1500)
+    function startGame(){
+        enabled = true
+        setInterval(incrementSeconds, 1000)
+        switch (difficulty){
+            case 'easy':
+                setInterval(fetchLetters, 2000)
+                break
+            case 'medium':
+                setInterval(fetchLetters, 1500)
+                break
+            case 'hard':
+                setInterval(fetchLetters, 1000)
+                break
+            case 'death':
+                setInterval(fetchLetters, 500)
+                break
+        }
+    }
 
     function fetchLetters(){
         if (enabled === true){
-            const probArray = [1,2,3,4,5,6,7,8]
+            const probArray = [1,2,3,4,5,6]
             const prob = probArray[Math.floor(Math.random()*probArray.length)]
             fetch(LETTERS_URL)
             .then(resp => resp.json())
@@ -320,7 +370,7 @@ function currentGame(game){
 
         document.addEventListener("dragstart", function(event) {
         // store a ref. on the dragged elem
-        if (event.target.className === 'letterbomb'){
+        if (event.target.className === 'letterbomb' && enabled === true){
             dragged = event.target;
         }
         // make it half transparent
