@@ -21,6 +21,11 @@ class GamesController < ApplicationController
         render json: Game.create(game_params)
     end
 
+    def updateGame
+        game = Game.find(params[:id])
+        render json: game.update(update_params)
+    end
+
     def lgs
         render json: Lg.all
     end
@@ -36,6 +41,9 @@ class GamesController < ApplicationController
     end
     def game_params
         params.permit(:user_id)
+    end
+    def update_params
+        params.permit(:seconds, :result)
     end
     def lg_params
         params.permit(:game_id, :letter_id)

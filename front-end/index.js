@@ -99,8 +99,8 @@ function currentUser(user){
     .then(game => currentGame(game))
 }
 
+let transition = document.getElementById("transition-page")
 function introToGame(){
-    let transition = document.getElementById("transition-page")
     introSlot.innerHTML = ''
     transition.style.display = 'none'
 }
@@ -113,19 +113,24 @@ function postBestTimes(user){
 
 function findBestTime(user, games){
     const successfulGames = games.filter(game => game.result === true)
-    const successfulGamesSeconds = successfulGames.map(game => game.seconds)
-    const universalBestTime = Math.min(...successfulGamesSeconds)
+    let universalBestTime
+    if (successfulGames.length > 0){
+        const successfulGamesSeconds = successfulGames.map(game => game.seconds)
+        universalBestTime = Math.min(...successfulGamesSeconds)
+    } else {
+        universalBestTime = '--'
+    }
+
     const userWins = successfulGames.filter(game => game.user_id === user.id)
-
-    let bestTimesSlot = document.getElementById('best-times')
     let personalBestTime
-
     if (userWins.length > 0){
         const userWinsSeconds = userWins.map(game => game.seconds)
         personalBestTime = Math.min(...userWinsSeconds)
     } else {
         personalBestTime = '--'
     }
+
+    let bestTimesSlot = document.getElementById('best-times')
     bestTimesSlot.innerHTML = `
         <span>Universal Best Time: <span id='top-time'>${universalBestTime} seconds</span><br>
         Personal Best Time: <span id='top-time'>${personalBestTime} seconds</span></span>
@@ -146,6 +151,7 @@ function incrementSeconds(){
 }
 
 function currentGame(game){
+    dragAndDrop(game)
     spaceKeyDetector.innerText = 'Press SPACE to Start Game'
     fetch(LETTERS_URL)
     .then(resp => resp.json())
@@ -223,7 +229,6 @@ function currentGame(game){
         document.documentElement.style.setProperty('--dx', `${dx}`);
         let letterTimer = 0
         let enableAnimation = true
-        dragAndDrop()
 
         function letterFall(){
             pauseAnimation()
@@ -236,12 +241,18 @@ function currentGame(game){
         function pauseAnimation(){
             switch (enabled){
                 case true:
-                    enableAnimation = true
                     letterBomb.style.webkitAnimationPlayState = "running"
                     break
                 case false:
-                    enableAnimation = false
                     letterBomb.style.webkitAnimationPlayState = "paused"
+                    break
+            }
+            switch (letterBomb.style.webkitAnimationPlayState){
+                case "running":
+                    enableAnimation = true
+                    break
+                case "paused":
+                    enableAnimation = false
                     break
             }
         }
@@ -292,83 +303,79 @@ function currentGame(game){
                     break
                 case 100:
                     letterBomb.src = './images/Letterbombs Explosion.jpg'
+                    strike()
                     break
                 case 102:
                     letterBomb.remove()
                     break
             }
         }
+    }
 
-        function dragAndDrop(){
-            let dragged;
+    function dragAndDrop(game){
+        let dragged;
 
-            /* events fired on the draggable target */
-            document.addEventListener("drag", function(event){
-            }, false);
+        /* events fired on the draggable target */
+        document.addEventListener("drag", function(event){
+        }, false);
 
-            document.addEventListener("dragstart", function(event) {
-            // store a ref. on the dragged elem
-            if (event.target.className === 'letterbomb'){
-                dragged = event.target;
-                enableAnimation = false
-                dragged.style.webkitAnimationPlayState = "paused"
-            }
-            // make it half transparent
-            event.target.style.opacity = .5;
-            }, false);
-
-            document.addEventListener("dragend", function( event ) {
-            // reset the transparency
-            event.target.style.opacity = "";
-            }, false);
-            /* events fired on the drop targets */
-            document.addEventListener("dragover", function( event ) {
-            // prevent default to allow drop
-            event.preventDefault();
-            }, false);
-
-            document.addEventListener("dragenter", function( event ) {
-            // highlight potential drop target when the draggable element enters it
-            if ( event.target.id === "right-basket" ) {
-                event.target.style.background = "white";
-            }
-
-            }, false);
-
-            document.addEventListener("dragleave", function( event ) {
-            // reset background of potential drop target when the draggable element leaves it
-            if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
-                event.target.style.background = "";
-            }
-
-            }, false);
-
-            document.addEventListener("drop", function( event ) {
-            // prevent default action (open as link for some elements)
-            event.preventDefault();
-            // move dragged elem to the selected drop target
-            if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
-                event.target.style.background = "";
-                dragged.parentNode.removeChild(dragged);
-                event.target.appendChild(dragged);
-            } else {
-                enableAnimation = true
-                dragged.style.webkitAnimationPlayState = "running"
-            }
-            if (event.target.id === "right-basket"){
-                fetch(LG_URL,{
-                    method: "Post",
-                    headers: {
-                        'content-type': 'application/json',
-                        accept: 'application/json'
-                    },
-                    body: JSON.stringify({'game_id':game.id,'letter_id':dragged.dataset.id})
-                })
-                .then(resp => resp.json())
-                .then(lg => useLg(lg))
-            }
-            }, false)
+        document.addEventListener("dragstart", function(event) {
+        // store a ref. on the dragged elem
+        if (event.target.className === 'letterbomb'){
+            dragged = event.target;
         }
+        // make it half transparent
+        event.target.style.opacity = .5;
+        }, false);
+
+        document.addEventListener("dragend", function( event ) {
+        // reset the transparency
+        event.target.style.opacity = "";
+        }, false);
+        /* events fired on the drop targets */
+        document.addEventListener("dragover", function( event ) {
+        // prevent default to allow drop
+        event.preventDefault();
+        }, false);
+
+        document.addEventListener("dragenter", function( event ) {
+        // highlight potential drop target when the draggable element enters it
+        if ( event.target.id === "right-basket" ) {
+            event.target.style.background = "white";
+        }
+
+        }, false);
+
+        document.addEventListener("dragleave", function( event ) {
+        // reset background of potential drop target when the draggable element leaves it
+        if ( event.target.id === "right-basket" || event.target.id === "left-basket" ) {
+            event.target.style.background = "";
+        }
+
+        }, false);
+
+        document.addEventListener("drop", function( event ) {
+        // prevent default action (open as link for some elements)
+        event.preventDefault();
+        // move dragged elem to the selected drop target
+        if ( event.target.id == "right-basket" || event.target.id === "left-basket") {
+            event.target.style.background = "";
+            dragged.parentNode.removeChild(dragged);
+            event.target.appendChild(dragged);
+        }
+        if (event.target.id === "right-basket"){
+            fetch(LG_URL,{
+                method: "Post",
+                headers: {
+                    'content-type': 'application/json',
+                    accept: 'application/json'
+                },
+                body: JSON.stringify({'game_id':game.id,'letter_id':dragged.dataset.id})
+            })
+            .then(resp => resp.json())
+            .then(lg => useLg(lg))
+        }
+        }, false)
     }
 
     function useLg(lg){
@@ -402,7 +409,6 @@ let strikes = 0
 
 function strike(){
     strikes += 1
-    console.log(strikes)
     switch (strikes){
         case 1:
             s1.src = './images/Letterbombs Strike.jpg'
@@ -424,8 +430,7 @@ function strike(){
 }
 
 function loss(){
-    enabled === false
-    enableAnimation === false
+    enabled = false
     transition.style.display = 'block'
     introSlot.innerText = 'Game Over'
 }
@@ -433,8 +438,7 @@ function loss(){
 function checkForWin(game){
     let whiteLetters = Array.from(document.getElementsByClassName('whiteletterslot'))
     if (whiteLetters.length === 26){
-        enabled === false
-        enableAnimation === false
+        enabled = false
         transition.style.display = 'block'
         introSlot.innerText = 'You Win!'
         fetch(`${GAMES_URL}/${game.id}`,{
@@ -443,7 +447,7 @@ function checkForWin(game){
                 'content-type': 'application/json',
                 accept: 'application/json'
             },
-            body: JSON.stringify()
+            body: JSON.stringify({'seconds':seconds, 'result':true})
         })
     }
 }
