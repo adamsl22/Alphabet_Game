@@ -194,6 +194,16 @@ header {
     animation-play-state: running;
 }
 
+#difficulty {
+    position: absolute;
+    top: 21%;
+    left: 25%;
+    width: 350px;
+    text-align: center;
+    color: #dbdbdb;
+    font-size: 40px;
+}
+
 #best-times {
     position: absolute;
     top: 21%;
@@ -207,7 +217,7 @@ header {
     background-color: black;
     height: 350px;
     width: 350px;
-    top: 22%;
+    top: 32%;
     left: 25%;
 }
 
@@ -252,7 +262,7 @@ header {
     position: absolute;
     height: 150px;
     width: 150px;
-    top: 40%;
+    top: 50%;
     left: 11%;
     text-align: center;
 }
@@ -261,7 +271,7 @@ header {
     position: absolute;
     height: 150px;
     width: 150px;
-    top: 40%;
+    top: 50%;
     left: 54.5%;
     text-align: center;
     color: #90a2b4;
@@ -276,15 +286,18 @@ header {
 
 #clock {
     position: absolute;
+    text-align: center;
     top: 84%;
-    left: 36.5%;
+    left: 35%;
+    width: 95px;
+    text-align: center;
     font-size: 50px;
     color: whitesmoke
 }
 
 #s1 {
     position: absolute;
-    top: 77%;
+    top: 79%;
     left: 30%;
     height: 25px;
     width: 25px;
@@ -292,7 +305,7 @@ header {
 
 #s2 {
     position: absolute;
-    top: 77%;
+    top: 79%;
     left: 33.75%;
     height: 25px;
     width: 25px;
@@ -300,7 +313,7 @@ header {
 
 #s3 {
     position: absolute;
-    top: 77%;
+    top: 79%;
     left: 37.5%;
     height: 25px;
     width: 25px;
@@ -308,7 +321,7 @@ header {
 
 #s4 {
     position: absolute;
-    top: 77%;
+    top: 79%;
     left: 41.25%;
     height: 25px;
     width: 25px;
@@ -316,7 +329,7 @@ header {
 
 #s5 {
     position: absolute;
-    top: 77%;
+    top: 79%;
     left: 45%;
     height: 25px;
     width: 25px;

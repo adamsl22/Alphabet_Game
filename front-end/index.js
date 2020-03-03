@@ -177,6 +177,7 @@ function findBestTime(user, games){
 let spaceKeyDetector = document.getElementById('pause')
 let lettersArea = document.getElementById('letters-area')
 let enabled = false
+let diffSlot = document.getElementById('difficulty')
 
 let timer = document.getElementById('clock')
 let seconds = 0
@@ -219,6 +220,7 @@ function currentGame(game){
     })
     function startGame(){
         enabled = true
+        diffSlot.innerText = `Difficulty: ${difficulty}`
         setInterval(incrementSeconds, 1000)
         switch (difficulty){
             case 'Easy':
