@@ -16,219 +16,177 @@ header {
 }
 
 :root {
-    --tx: 175px;
-    --dx: 0px;
+    --tx: 175;
+    --dx: 175;
 }
 
 @keyframes letterfall {
-    0% {transform:
-        translateX(175px)
-    }
     2% {transform:
         translateY(20%)
-        translateX(300px)
+        translateX(calc((var(--tx) + var(--dx)*.02)*1px))
     }
     4% {transform:
         translateY(40%)
-        translateX(150px)
+        translateX(calc((var(--tx) + var(--dx)*.04)*1px))
     }
     6% {transform:
         translateY(60%)
-        translateX(180px)
+        translateX(calc((var(--tx) + var(--dx)*.06)*1px))
     }
     8% {transform:
         translateY(80%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.08)*1px))
     }
     10% {transform:
         translateY(100%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.1)*1px))
     }
     12% {transform:
         translateY(120%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.12)*1px))
     }
     14% {transform:
         translateY(140%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.14)*1px))
     }
     16% {transform:
         translateY(160%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.16)*1px))
     }
     18% {transform:
         translateY(180%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.18)*1px))
     }
     20% {transform:
         translateY(200%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.2)*1px))
     }
     22% {transform:
         translateY(220%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.22)*1px))
     }
     24% {transform:
         translateY(240%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.24)*1px))
     }
     26% {transform:
         translateY(260%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.26)*1px))
     }
     28% {transform:
         translateY(280%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.28)*1px))
     }
     30% {transform:
         translateY(300%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.3)*1px))
     }
     32% {transform:
         translateY(320%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.32)*1px))
     }
     34% {transform:
         translateY(340%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.34)*1px))
     }
     36% {transform:
         translateY(360%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.36)*1px))
     }
     38% {transform:
         translateY(380%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.38)*1px))
     }
     40% {transform:
         translateY(400%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.4)*1px))
     }
     42% {transform:
         translateY(420%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.42)*1px))
     }
     44% {transform:
         translateY(440%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.44)*1px))
     }
     46% {transform:
         translateY(460%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.46)*1px))
     }
     48% {transform:
         translateY(480%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.48)*1px))
     }
     50% {transform:
         translateY(500%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.5)*1px))
     }
     52% {transform:
         translateY(520%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.52)*1px))
     }
     54% {transform:
         translateY(540%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.54)*1px))
     }
     56% {transform:
         translateY(560%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.56)*1px))
     }
     58% {transform:
         translateY(580%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.58)*1px))
     }
     60% {transform:
         translateY(600%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.6)*1px))
     }
     62% {transform:
         translateY(620%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.62)*1px))
     }
     64% {transform:
         translateY(640%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.64)*1px))
     }
     66% {transform:
         translateY(660%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.66)*1px))
     }
     68% {transform:
         translateY(680%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.68)*1px))
     }
     70% {transform:
         translateY(700%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.7)*1px))
     }
     72% {transform:
         translateY(720%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.72)*1px))
     }
     74% {transform:
         translateY(740%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.74)*1px))
     }
     76% {transform:
         translateY(760%)
-        translateX(var(--dx, 0px))
+        translateX(calc((var(--tx) + var(--dx)*.76)*1px))
     }
     78% {transform:
-        translateY(780%)
-        translateX(var(--dx, 0px))
-    }
-    80% {transform:
-        translateY(800%)
-        translateX(var(--dx, 0px))
-    }
-    82% {transform:
-        translateY(820%)
-        translateX(var(--dx, 0px))
-    }
-    84% {transform:
-        translateY(840%)
-        translateX(var(--dx, 0px))
-    }
-    86% {transform:
-        translateY(860%)
-        translateX(var(--dx, 0px))
-    }
-    88% {transform:
-        translateY(880%)
-        translateX(var(--dx, 0px))
-    }
-    90% {transform:
-        translateY(900%)
-        translateX(var(--dx, 0px))
-    }
-    92% {transform:
-        translateY(920%)
-        translateX(var(--dx, 0px))
-    }
-    94% {transform:
-        translateY(940%)
-        translateX(var(--dx, 0px))
-    }
-    96% {transform:
-        translateY(960%)
-        translateX(var(--dx, 0px))
-    }
-    98% {transform:
-        translateY(980%)
-        translateX(var(--dx, 0px))
+        translateY(770%)
+        translateX(calc((var(--tx) + var(--dx)*.78)*1px))
     }
     100% {transform: 
-        translateY(1000%)
-        translateX(var(--dx, 0px))
+        translateY(770%)
+        translateX(calc((var(--tx) + var(--dx)*.8)*1px))
     }
 }
 
 .letterbomb {
     animation-name: letterfall;
-    animation-duration: 5s;
+    animation-duration: 6s;
+    animation-play-state: running;
 }
 
 #best-times {
@@ -275,6 +233,14 @@ header {
     top: 35%;
     left: 70%;
     font-size: 40px;
+}
+
+.blackletterslot {
+    color: black;
+}
+
+.whiteletterslot {
+    color: white;
 }
 
 #left-basket {
