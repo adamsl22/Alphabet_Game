@@ -43,7 +43,7 @@ class GamesController < ApplicationController
         params.permit(:user_id)
     end
     def update_params
-        params.permit(:seconds, :result)
+        params.permit(:seconds, :result, :difficulty)
     end
     def lg_params
         params.permit(:game_id, :letter_id)

@@ -26,19 +26,19 @@ function buttons(){
                 document.location.reload()
                 break
             case 'Easy':
-                difficulty = 'easy'
+                difficulty = 'Easy'
                 introToGame()
                 break
             case 'Medium':
-                difficulty = 'medium'
+                difficulty = 'Medium'
                 introToGame()
                 break
             case 'Hard':
-                difficulty = 'hard'
+                difficulty = 'Hard'
                 introToGame()
                 break
             case 'Unwinnable':
-                difficulty = 'death'
+                difficulty = 'Unwinnable'
                 introToGame()
                 break
         }
@@ -221,16 +221,16 @@ function currentGame(game){
         enabled = true
         setInterval(incrementSeconds, 1000)
         switch (difficulty){
-            case 'easy':
+            case 'Easy':
                 setInterval(fetchLetters, 2000)
                 break
-            case 'medium':
+            case 'Medium':
                 setInterval(fetchLetters, 1500)
                 break
-            case 'hard':
+            case 'Hard':
                 setInterval(fetchLetters, 1000)
                 break
-            case 'death':
+            case 'Unwinnable':
                 setInterval(fetchLetters, 500)
                 break
         }
@@ -505,7 +505,7 @@ function checkForWin(game){
                 'content-type': 'application/json',
                 accept: 'application/json'
             },
-            body: JSON.stringify({'seconds':seconds, 'result':true})
+            body: JSON.stringify({'seconds':seconds, 'result':true, 'difficulty':difficulty})
         })
         .then(fetchHighScores())
     }
@@ -531,18 +531,17 @@ function postHighScores(games){
     function topScorers(users){
         
         let scoreTable = document.createElement("table")
-        scoreTable.className = 'grid'
+        scoreTable.className = 'table'
         scoreTable.innerHTML = `
-        <tr><th>Player</th><th>Time(s)</th></tr>
+        <tr><th>Player</th><th>Time(s)</th><th>Difficulty</th></tr>
         `
 
         topTen.forEach(hs => highScoreHash(hs))
         function highScoreHash(hs){
             let scorer = users.find(user => user.id === hs.user_id).name
-            let score = hs.seconds
             let scorePost = document.createElement('tr')
             scorePost.innerHTML = `
-                <td>${scorer}</td><td>${score}</td>
+                <td>${scorer}</td><td>${hs.seconds}</td><td>${hs.difficulty}</td>
             `
             scoreTable.append(scorePost)
         }
