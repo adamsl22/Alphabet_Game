@@ -467,7 +467,6 @@ function postHighScores(games){
 
     let topTen = winScores.sort(function(a,b){ return a - b }).slice(0, 10)
      
-    debugger
     topTen.forEach(function(score){
         let scorePost = document.createElement("ul")
 
