@@ -16,42 +16,41 @@ header {
 }
 
 /* :root {
-    --tx: 175px;
     --dx: 0px;
 } */
 
 @keyframes letterfall {
     2% {transform:
         translateY(20%)
-        translateX(100%)
+        translateX(200%)
     }
     4% {transform:
         translateY(40%)
-        translateX(125%)
+        translateX(145%)
     }
     6% {transform:
         translateY(60%)
-        translateX(200%)
+        translateX(115%)
     }
     8% {transform:
         translateY(80%)
-        translateX(300%)
+        translateX(100%)
     }
     10% {transform:
         translateY(100%)
-        translateX(400%)
+        translateX(115%)
     }
     12% {transform:
         translateY(120%)
-        translateX(475%)
+        translateX(145%)
     }
     14% {transform:
         translateY(140%)
-        translateX(500%)
+        translateX(200%)
     }
     16% {transform:
         translateY(160%)
-        translateX(475%)
+        translateX(300%)
     }
     18% {transform:
         translateY(180%)
@@ -59,27 +58,27 @@ header {
     }
     20% {transform:
         translateY(200%)
-        translateX(300%)
+        translateX(455%)
     }
     22% {transform:
         translateY(220%)
-        translateX(200%)
+        translateX(485%)
     }
     24% {transform:
         translateY(240%)
-        translateX(125%)
+        translateX(500%)
     }
     26% {transform:
         translateY(260%)
-        translateX(100%)
+        translateX(485%)
     }
     28% {transform:
         translateY(280%)
-        translateX(125%)
+        translateX(455%)
     }
     30% {transform:
         translateY(300%)
-        translateX(200%)
+        translateX(400%)
     }
     32% {transform:
         translateY(320%)
@@ -87,27 +86,27 @@ header {
     }
     34% {transform:
         translateY(340%)
-        translateX(400%)
+        translateX(200%)
     }
     36% {transform:
         translateY(360%)
-        translateX(475%)
+        translateX(145%)
     }
     38% {transform:
         translateY(380%)
-        translateX(500%)
+        translateX(115%)
     }
     40% {transform:
         translateY(400%)
-        translateX(475%)
+        translateX(100%)
     }
     42% {transform:
         translateY(420%)
-        translateX(400%)
+        translateX(115%)
     }
     44% {transform:
         translateY(440%)
-        translateX(300%)
+        translateX(145%)
     }
     46% {transform:
         translateY(460%)
@@ -115,63 +114,63 @@ header {
     }
     48% {transform:
         translateY(480%)
-        translateX(125%)
+        translateX(300%)
     }
     50% {transform:
         translateY(500%)
-        translateX(100%)
+        translateX(400%)
     }
     52% {transform:
         translateY(520%)
-        translateX(125%)
+        translateX(455%)
     }
     54% {transform:
         translateY(540%)
-        translateX(200%)
+        translateX(485%)
     }
     56% {transform:
         translateY(560%)
-        translateX(300%)
+        translateX(500%)
     }
     58% {transform:
         translateY(580%)
-        translateX(400%)
+        translateX(485%)
     }
     60% {transform:
         translateY(600%)
-        translateX(475%)
+        translateX(455%)
     }
     62% {transform:
         translateY(620%)
-        translateX(500%)
+        translateX(400%)
     }
     64% {transform:
         translateY(640%)
-        translateX(475%)
+        translateX(300%)
     }
     66% {transform:
         translateY(660%)
-        translateX(400%)
+        translateX(200%)
     }
     68% {transform:
         translateY(680%)
-        translateX(300%)
+        translateX(145%)
     }
     70% {transform:
         translateY(700%)
-        translateX(200%)
+        translateX(115%)
     }
     72% {transform:
         translateY(720%)
-        translateX(125%)
+        translateX(100%)
     }
     74% {transform:
         translateY(740%)
-        translateX(100%)
+        translateX(115%)
     }
     76% {transform:
         translateY(760%)
-        translateX(125%)
+        translateX(145%)
     }
     78% {transform:
         translateY(770%)

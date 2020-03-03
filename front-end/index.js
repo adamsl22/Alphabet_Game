@@ -180,7 +180,7 @@ function currentGame(game){
         }
     })
     setInterval(incrementSeconds, 1000)
-    setInterval(fetchLetters, 500)
+    setInterval(fetchLetters, 1000)
 
     function fetchLetters(){
         if (enabled === true){
@@ -221,11 +221,10 @@ function currentGame(game){
         letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
         canvas.appendChild(letterBomb)
         letterBomb.style.position = 'absolute'
-        // letterBomb.style.transform = `translateX(${x}px)`
+        let x = (Math.random() * 250);
+        letterBomb.style.transform = `translateX(${x}px)`
         setInterval(letterFall, 50)
 
-        let x = (Math.random() * 250);
-        document.documentElement.style.setProperty('--tx', `${x}`);
         //let y = 0
         //let dy = 1
         // let dx
@@ -247,8 +246,6 @@ function currentGame(game){
         function letterFall(){
             if (enableAnimation === true){
                 letterTimer += 1
-                // letterBomb.style.transform = `translateX(${dx}px)`
-                // letterBomb.style.transform = 'translateY(1px)'
                 ticking(letterTimer)
                 // drawLb()
                 // x += dx
