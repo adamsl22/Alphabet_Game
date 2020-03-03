@@ -447,3 +447,27 @@ function checkForWin(game){
         })
     }
 }
+
+function fetchHighScores(){
+    fetch(GAMES_URL)
+    .then(resp => resp.json())
+    .then(games => postHighScores(games))
+}
+
+function postHighScores(games){
+    let scores = Object.values(games).map(function(game){
+        return game.seconds
+    })
+
+    let topTen = scores.sort().slice(0, 10)
+
+    topTen.forEach(function(score){
+        let scorePost = document.createElement("li")
+
+        scorePost.innerHTML = `
+            ${score}
+        `
+
+        introSlot.append(scorePost)
+    })
+}
