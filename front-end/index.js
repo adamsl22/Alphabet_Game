@@ -433,6 +433,7 @@ function loss(){
     enabled = false
     transition.style.display = 'block'
     introSlot.innerText = 'Game Over'
+    fetchHighScores()
 }
 
 function checkForWin(game){
@@ -449,6 +450,7 @@ function checkForWin(game){
             },
             body: JSON.stringify({'seconds':seconds, 'result':true})
         })
+        .then(fetchHighScores())
     }
 }
 
@@ -459,19 +461,24 @@ function fetchHighScores(){
 }
 
 function postHighScores(games){
-    let scores = Object.values(games).map(function(game){
+    let wonGames = games.filter(function(game){
+        return game.result === true
+    })
+
+    let winScores = wonGames.map(function(game){
         return game.seconds
     })
 
-    let topTen = scores.sort().slice(0, 10)
-
+    let topTen = winScores.sort(function(a,b){ return a - b }).slice(0, 10)
+     
+    debugger
     topTen.forEach(function(score){
-        let scorePost = document.createElement("li")
+        let scorePost = document.createElement("ul")
 
         scorePost.innerHTML = `
             ${score}
         `
-
+        
         introSlot.append(scorePost)
     })
 }
