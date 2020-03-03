@@ -221,35 +221,31 @@ function currentGame(game){
         letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
         canvas.appendChild(letterBomb)
         letterBomb.style.position = 'absolute'
-        let x = (Math.random() * 250);
+        let x = (Math.random() * 300);
         letterBomb.style.transform = `translateX(${x}px)`
         setInterval(letterFall, 50)
 
-        //let y = 0
-        //let dy = 1
-        // let dx
-        if (x > canvas.width/2){
-            dx = Math.random() * -1;
-        } else {
-            dx = Math.random();
-        }
+        document.documentElement.style.setProperty('--tx', `${x}`);
+        dx = (175 - x) * 2 * Math.random();
         document.documentElement.style.setProperty('--dx', `${dx}`);
         let letterTimer = 0
-        //console.log(document.documentElement.style.getPropertyValue('--dx'))
-
-        // function drawLb(){
-        //     ctx.beginPath()
-        //     ctx.drawImage(letterBomb,x,y)
-        //     ctx.closePath()
-        // }
 
         function letterFall(){
+            pauseAnimation()
             if (enableAnimation === true){
                 letterTimer += 1
                 ticking(letterTimer)
-                // drawLb()
-                // x += dx
-                // y += dy
+            }
+        }
+
+        function pauseAnimation(){
+            switch (enableAnimation){
+                case true:
+                    letterBomb.style.webkitAnimationPlayState = "running"
+                    break
+                case false:
+                    letterBomb.style.webkitAnimationPlayState = "paused"
+                    break
             }
         }
 
