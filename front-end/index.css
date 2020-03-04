@@ -196,9 +196,9 @@ header {
 
 #difficulty {
     position: absolute;
-    top: 21%;
-    left: 25%;
-    width: 350px;
+    top: 150px;
+    left: 299px;
+    width: 400px;
     text-align: center;
     color: #dbdbdb;
     font-size: 40px;
@@ -206,8 +206,8 @@ header {
 
 #best-times {
     position: absolute;
-    top: 21%;
-    left: 70%;
+    top: 150px;
+    left: 895px;
     color: #dbdbdb;
     font-size: 20px;
 }
@@ -217,8 +217,8 @@ header {
     background-color: black;
     height: 350px;
     width: 350px;
-    top: 32%;
-    left: 25%;
+    top: 230px;
+    left: 321px;
 }
 
 #transition-page {
@@ -245,8 +245,8 @@ header {
     position: absolute;
     text-align: center;
     width: 250px;
-    top: 35%;
-    left: 70%;
+    top: 250px;
+    left: 900px;
     font-size: 40px;
 }
 
@@ -262,8 +262,8 @@ header {
     position: absolute;
     height: 150px;
     width: 150px;
-    top: 50%;
-    left: 11%;
+    top: 375px;
+    left: 141px;
     text-align: center;
 }
 
@@ -271,8 +271,8 @@ header {
     position: absolute;
     height: 150px;
     width: 150px;
-    top: 50%;
-    left: 54.5%;
+    top: 375px;
+    left: 697px;
     text-align: center;
     color: #90a2b4;
     font-size: 100px;
@@ -280,15 +280,15 @@ header {
 
 #pause {
     position: absolute;
-    top: 75%;
-    left: 70%;
+    top: 550px;
+    left: 895px;
 }
 
 #clock {
     position: absolute;
     text-align: center;
-    top: 84%;
-    left: 35%;
+    top: 635px;
+    left: 446px;
     width: 95px;
     text-align: center;
     font-size: 50px;
@@ -297,40 +297,40 @@ header {
 
 #s1 {
     position: absolute;
-    top: 79%;
-    left: 30%;
+    top: 595px;
+    left: 384px;
     height: 25px;
     width: 25px;
 }
 
 #s2 {
     position: absolute;
-    top: 79%;
-    left: 33.75%;
+    top: 595px;
+    left: 432px;
     height: 25px;
     width: 25px;
 }
 
 #s3 {
     position: absolute;
-    top: 79%;
-    left: 37.5%;
+    top: 595px;
+    left: 480px;
     height: 25px;
     width: 25px;
 }
 
 #s4 {
     position: absolute;
-    top: 79%;
-    left: 41.25%;
+    top: 595px;
+    left: 528px;
     height: 25px;
     width: 25px;
 }
 
 #s5 {
     position: absolute;
-    top: 79%;
-    left: 45%;
+    top: 595px;
+    left: 576px;
     height: 25px;
     width: 25px;
 }
