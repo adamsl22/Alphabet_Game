@@ -9,6 +9,8 @@ let introSlot = document.getElementById('intro-slot')
 document.addEventListener('DOMContentLoaded', () => {
     introPage()
     buttons()
+    backgroundMusic.play()
+    backgroundMusic.loop = true
 })
 
 function buttons(){
@@ -240,7 +242,7 @@ function currentGame(game){
 
     function fetchLetters(){
         if (enabled === true){
-            const probArray = [1,2,3,4,5,6]
+            const probArray = [1,2,3,4,5]
             const prob = probArray[Math.floor(Math.random()*probArray.length)]
             fetch(LETTERS_URL)
             .then(resp => resp.json())
@@ -309,56 +311,71 @@ function currentGame(game){
         function ticking(time){
             switch (time){
                 case 50:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 52:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 65:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 67:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 75:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 77:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 80:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 82:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 85:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 87:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 90:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 92:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 95:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                    orange()
                     break
                 case 97:
-                    letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+                    white()
                     break
                 case 100:
-                    letterBomb.src = './images/Letterbombs Explosion.jpg'
-                    if (Array.from(canvas.childNodes).includes(letterBomb)){
-                        strike()
-                    }
+                    explode()
                     break
                 case 102:
                     letterBomb.remove()
                     break
+            }
+        }
+        function orange(){
+            if (Array.from(canvas.childNodes).includes(letterBomb)){
+                letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
+                //beep.play()
+            }
+        }
+        function white(){
+            if (Array.from(canvas.childNodes).includes(letterBomb)){
+                letterBomb.src = `./images/Letters/Letterbombs ${letter.character}W.jpg`
+            }
+        }
+        function explode(){
+            if (Array.from(canvas.childNodes).includes(letterBomb)){
+                letterBomb.src = './images/Letterbombs Explosion.jpg'
+                strike()
+                explodeSound.play()
             }
         }
     }
@@ -425,6 +442,8 @@ function currentGame(game){
             })
             .then(resp => resp.json())
             .then(lg => useLg(lg))
+        } else if (event.target.id === "left-basket"){
+            discardSound.play()
         }
         }, false)
     }
@@ -441,10 +460,12 @@ function currentGame(game){
             switch (targetSlot.className){
                 case 'blackletterslot':
                     targetSlot.className = 'whiteletterslot'
+                    correct.play()
                     checkForWin(game)
                     break
                 case 'whiteletterslot':
                     strike()
+                    wrong.play()
                     break
             }
         }
@@ -481,12 +502,14 @@ function strike(){
 }
 
 function loss(){
+    backgroundMusic.pause()
+    lossSound.play()
     enabled = false
     transition.style.display = 'block'
     introSlot.innerHTML = `
     <h1>Game Over</h1>
     <button class='button'>Play Again</button><br>
-    <h3>Best Times</h3>
+    <h3>Best Times (${difficulty})</h3>
     `
     fetchHighScores()
 }
@@ -494,12 +517,14 @@ function loss(){
 function checkForWin(game){
     let whiteLetters = Array.from(document.getElementsByClassName('whiteletterslot'))
     if (whiteLetters.length === 26){
+        backgroundMusic.pause()
+        winSound.play()
         enabled = false
         transition.style.display = 'block'
         introSlot.innerHTML = `
             <h1>You Win!</h1>
             <button class='button'>Play Again</button><br>
-            <h3>Best Times</h3>
+            <h3>Best Times (${difficulty})</h3>
         `
         fetch(`${GAMES_URL}/${game.id}`,{
             method: 'PATCH',
@@ -520,7 +545,9 @@ function fetchHighScores(){
 }
 
 function postHighScores(games){
-    let wonGames = games.filter(function(game){
+    let gamesOnDiff = games.filter(game => game.difficulty === difficulty)
+    
+    let wonGames = gamesOnDiff.filter(function(game){
         return game.result === true
     })
 
@@ -535,7 +562,7 @@ function postHighScores(games){
         let scoreTable = document.createElement("table")
         scoreTable.className = 'table'
         scoreTable.innerHTML = `
-        <tr><th>Player</th><th>Time(s)</th><th>Difficulty</th></tr>
+            <tr><th>Player</th>&nbsp;<th>Time(s)</th></tr>
         `
 
         topTen.forEach(hs => highScoreHash(hs))
@@ -543,10 +570,20 @@ function postHighScores(games){
             let scorer = users.find(user => user.id === hs.user_id).name
             let scorePost = document.createElement('tr')
             scorePost.innerHTML = `
-                <td>${scorer}</td><td>${hs.seconds}</td><td>${hs.difficulty}</td>
+                <td>${scorer}</td><td>${hs.seconds}</td>
             `
             scoreTable.append(scorePost)
         }
         introSlot.append(scoreTable)
     }
 }
+
+//sounds
+//const beep = new Audio("./sounds/beep.wav")
+const correct = new Audio("./sounds/correct.wav")
+const discardSound = new Audio("./sounds/discard.wav")
+const explodeSound = new Audio("./sounds/explosion.wav")
+const lossSound = new Audio("./sounds/loss.wav")
+const winSound = new Audio("./sounds/victoryff.mp3")
+const wrong = new Audio("./sounds/wrong.mp3")
+const backgroundMusic = new Audio("./sounds/background.wav")
