@@ -108,7 +108,14 @@ function returningUser(){
         e.preventDefault()
         fetch(USERS_URL)
         .then(resp => resp.json())
-        .then(users => currentUser(users.filter(user => user.name === userForm.name.value)[0]))
+        .then(users => {
+            const retUser = users.filter(user => user.name === userForm.name.value)[0]
+            if (retUser){
+                currentUser(retUser)
+            } else {
+                alert('This username does not match an existing player.')
+            }
+        })
     })
 }
 
@@ -565,8 +572,8 @@ function postHighScores(games){
             <tr><th>Player</th>&nbsp;<th>Time(s)</th></tr>
         `
 
-        topTen.forEach(hs => highScoreHash(hs))
-        function highScoreHash(hs){
+        topTen.forEach(hs => highScoreRow(hs))
+        function highScoreRow(hs){
             let scorer = users.find(user => user.id === hs.user_id).name
             let scorePost = document.createElement('tr')
             scorePost.innerHTML = `
