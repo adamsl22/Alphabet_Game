@@ -1,24 +1,7 @@
-# README
+# Welcome to LETTERBOMBS! by Adam Longman and Adam Xiao
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Note: This game works in Safari. It does not work in Chrome. Other browsers tbd.
 
-Things you may want to cover:
+After cloning, run rails db:migrate and rails db:seed to seed each letter into the database. The game can then be played by opening front-end/index.html.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Ruby version: ruby 2.6.1p33
