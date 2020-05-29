@@ -315,6 +315,7 @@ function currentGame(game){
 
         //Sets the CSS variables for the falling animation,
         //so that each letter falls at a different angle.
+        //**HANDLED DIFFERENTLY BY DIFFERENT BROWSERS.**
         document.documentElement.style.setProperty('--tx', `${x}`);
         let dx = (175 - x) * 2 * Math.random();
         document.documentElement.style.setProperty('--dx', `${dx}`);
