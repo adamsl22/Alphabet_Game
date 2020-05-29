@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backgroundMusic.loop = true
 })
 
+//Functionality for each of the buttons in the game.
 function buttons(){
     document.addEventListener('click', (e) => {
         switch  (e.target.innerText){
@@ -63,6 +64,7 @@ const playerForm = `
     </form>
 `    
 
+//Welcome page
 function introPage(){
     introSlot.innerHTML = `
         <h1>Welcome</h1>
@@ -72,6 +74,7 @@ function introPage(){
     `
 }
 
+//Creates a file for new users to record personal best times.
 function addUser(){
     let userForm = document.getElementById("form")
 
@@ -101,6 +104,7 @@ function addUser(){
     })
 }
 
+//Retrieves the file for returning users.
 function returningUser(){
     let userForm = document.getElementById("form")
 
@@ -119,6 +123,7 @@ function returningUser(){
     })
 }
 
+//Sets the indicated user and creates the new game file.
 function currentUser(user){
     difficultySelection()
     postBestTimes(user)
@@ -134,6 +139,7 @@ function currentUser(user){
     .then(game => currentGame(game))
 }
 
+//Difficulty selection
 let difficulty
 function difficultySelection(){
     introSlot.innerHTML = `
@@ -145,12 +151,15 @@ function difficultySelection(){
     `
 }
 
+//Removes the html layer over the main game screen once all game options are selected.
 let transition = document.getElementById("transition-page")
 function introToGame(){
     introSlot.innerHTML = ''
     transition.style.display = 'none'
 }
 
+//These next two functions display the universal and personal high scores in the corner of the main game screen.
+//If the user has not yet won a game, the personal best will be displayed as --.
 function postBestTimes(user){
     fetch(GAMES_URL)
     .then(resp => resp.json())
@@ -188,6 +197,7 @@ let lettersArea = document.getElementById('letters-area')
 let enabled = false
 let diffSlot = document.getElementById('difficulty')
 
+//Runs the timer once the game is started.
 let timer = document.getElementById('clock')
 let seconds = 0
 function incrementSeconds(){
@@ -197,6 +207,8 @@ function incrementSeconds(){
     }
 }
 
+//Most game functions are organized within this function to ensure
+//that all required arguments and variables are properly detected.
 function currentGame(game){
     dragAndDrop(game)
     spaceKeyDetector.innerText = 'Press SPACE to Start Game'
@@ -209,6 +221,7 @@ function currentGame(game){
         lettersArea.append(letterSlot)
     }))
 
+    //KeyCode 32 is the space bar.
     document.addEventListener('keypress', (e) => {
         if (e.keyCode === 32){
             switch (spaceKeyDetector.innerText){
@@ -227,10 +240,18 @@ function currentGame(game){
             }
         }
     })
+
+    //The first time the space bar is pressed starts the game.
     function startGame(){
         enabled = true
+        
+        //Displays the selected difficulty.
         diffSlot.innerText = `Difficulty: ${difficulty}`
+
+        //Activates the timer.
         setInterval(incrementSeconds, 1000)
+
+        //Sets the letter interval based on the difficulty selected.
         switch (difficulty){
             case 'Easy':
                 setInterval(fetchLetters, 2000)
@@ -247,6 +268,7 @@ function currentGame(game){
         }
     }
 
+    //Retrieves the letters to spawn at the top of the canvas.
     function fetchLetters(){
         if (enabled === true){
             const probArray = [1,2,3,4,5]
@@ -257,6 +279,8 @@ function currentGame(game){
         }
     }
 
+    //Selects the letter, with a 20% chance to guarantee that it
+    //is not one the player already has in the 'Keep' basket.
     function sampleLetters(letters, prob){
         let letterSample
         if (prob === 1){
@@ -276,6 +300,7 @@ function currentGame(game){
 
     const canvas = document.getElementById('canvas')
 
+    //Spawns and animates the letter.
     function letterbomb(letter){
         let letterBomb = document.createElement('img')
         letterBomb.height = 40
@@ -288,12 +313,17 @@ function currentGame(game){
         letterBomb.style.transform = `translateX(${x}px)`
         setInterval(letterFall, 50)
 
+        //Sets the CSS variables for the falling animation,
+        //so that each letter falls at a different angle.
         document.documentElement.style.setProperty('--tx', `${x}`);
         let dx = (175 - x) * 2 * Math.random();
         document.documentElement.style.setProperty('--dx', `${dx}`);
         let letterTimer = 0
         let enableAnimation = true
 
+        //For more info on the various experiments I ran while building this animation and why
+        //I ultimately selected this combination of JS and CSS, check out my Medium post at
+        //https://medium.com/@adaml22/three-methods-for-animating-movement-in-js-css-579365ec0725.
         function letterFall(){
             pauseAnimation()
             if (enableAnimation === true){
@@ -370,7 +400,6 @@ function currentGame(game){
         function orange(){
             if (Array.from(canvas.childNodes).includes(letterBomb)){
                 letterBomb.src = `./images/Letters/Letterbombs ${letter.character}O.jpg`
-                //beep.play()
             }
         }
         function white(){
@@ -387,6 +416,7 @@ function currentGame(game){
         }
     }
 
+    //The dreaded drag and drop, built by Adam Xiao.
     function dragAndDrop(game){
         let dragged;
 
@@ -438,6 +468,8 @@ function currentGame(game){
             dragged.parentNode.removeChild(dragged);
             // event.target.appendChild(dragged);
         }
+
+        //The right basket is the 'Keep' basket.
         if (event.target.id === "right-basket"){
             fetch(LG_URL,{
                 method: "Post",
@@ -449,18 +481,24 @@ function currentGame(game){
             })
             .then(resp => resp.json())
             .then(lg => useLg(lg))
+
+        //The left basket safely discards extra letters to avoid strikes.
         } else if (event.target.id === "left-basket"){
             discardSound.play()
         }
         }, false)
     }
 
+    //When a letter is deposited in the 'Keep' basket.
     function useLg(lg){
         const letterSlotsArray = Array.from(lettersArea.getElementsByTagName('span'))
         fetch(LETTERS_URL)
         .then(resp => resp.json())
         .then(letters => illuminateLetter(letters))
 
+        //Checks whether the player has already added said letter to the 'Keep' basket. If not,
+        //illuminates the letter on the right side of the game screen and checks for a win. If so,
+        //adds a strike. The sound that plays is determined accordingly.
         function illuminateLetter(letters){
             const targetLetter = letters.filter(letter => letter.id === lg.letter_id)[0].character
             const targetSlot = Array.from(letterSlotsArray.filter(letterSlot => Array.from(letterSlot.innerText.split(" ")).includes(targetLetter)))[0]
@@ -479,6 +517,7 @@ function currentGame(game){
     }
 }
 
+//Five strikes and you're out.
 const s1 = document.getElementById('s1')
 const s2 = document.getElementById('s2')
 const s3 = document.getElementById('s3')
@@ -509,48 +548,70 @@ function strike(){
 }
 
 function loss(){
+
+    //Losing sound.
     backgroundMusic.pause()
     lossSound.play()
+
+    //Stops game.
     enabled = false
+
+    //Game over screen.
     transition.style.display = 'block'
     introSlot.innerHTML = `
     <h1>Game Over</h1>
     <button class='button'>Play Again</button><br>
     <h3>Best Times (${difficulty})</h3>
     `
+
+    //Retrieve and post high scores for selected difficulty.
     fetchHighScores()
 }
 
+//Checks for a win each time a letter is illuminated on the right side of the screen.
 function checkForWin(game){
     let whiteLetters = Array.from(document.getElementsByClassName('whiteletterslot'))
-    if (whiteLetters.length === 26){
-        backgroundMusic.pause()
-        winSound.play()
-        enabled = false
-        transition.style.display = 'block'
-        introSlot.innerHTML = `
-            <h1>You Win!</h1>
-            <button class='button'>Play Again</button><br>
-            <h3>Best Times (${difficulty})</h3>
-        `
-        fetch(`${GAMES_URL}/${game.id}`,{
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json',
-                accept: 'application/json'
-            },
-            body: JSON.stringify({'seconds':seconds, 'result':true, 'difficulty':difficulty})
-        })
-        .then(fetchHighScores())
-    }
+    if (whiteLetters.length === 26) {win(game)}
 }
 
+function win(game){
+
+    //Winning sound.
+    backgroundMusic.pause()
+    winSound.play()
+
+    //Stops game.
+    enabled = false
+
+    //Victory screen.
+    transition.style.display = 'block'
+    introSlot.innerHTML = `
+        <h1>You Win!</h1>
+        <button class='button'>Play Again</button><br>
+        <h3>Best Times (${difficulty})</h3>
+    `
+
+    //Updates the game file to indicate victory and store the time as a
+    //potential future high score, then retrieves the previous high scores.
+    fetch(`${GAMES_URL}/${game.id}`,{
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            accept: 'application/json'
+        },
+        body: JSON.stringify({'seconds':seconds, 'result':true, 'difficulty':difficulty})
+    })
+    .then(fetchHighScores())
+}
+
+//Retrieves the high scores to post on the victory or game over screen.
 function fetchHighScores(){
     fetch(GAMES_URL)
     .then(resp => resp.json())
     .then(games => postHighScores(games))
 }
 
+//Posts the top ten high scores for the selected difficulty.
 function postHighScores(games){
     let gamesOnDiff = games.filter(game => game.difficulty === difficulty)
     
@@ -566,12 +627,14 @@ function postHighScores(games){
     
     function topScorers(users){
         
+        //Creates the high score table.
         let scoreTable = document.createElement("table")
         scoreTable.className = 'table'
         scoreTable.innerHTML = `
             <tr><th>Player</th>&nbsp;<th>Time(s)</th></tr>
         `
 
+        //Creates the rows for the table.
         topTen.forEach(hs => highScoreRow(hs))
         function highScoreRow(hs){
             let scorer = users.find(user => user.id === hs.user_id).name
@@ -585,8 +648,7 @@ function postHighScores(games){
     }
 }
 
-//sounds
-//const beep = new Audio("./sounds/beep.wav")
+//Sounds
 const correct = new Audio("./sounds/correct.wav")
 const discardSound = new Audio("./sounds/discard.wav")
 const explodeSound = new Audio("./sounds/explosion.wav")
