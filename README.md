@@ -1,6 +1,6 @@
 # Welcome to LETTERBOMBS! by Adam Longman and Adam Xiao
 
-![Demo Gif](demo/demo.gif)
+<img src="demo/demo.gif" width="300"/>
 
 Note: This game works in Safari. It does not work in Chrome. Other browsers tbd.
 
